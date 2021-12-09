@@ -1,7 +1,8 @@
-package ru.modemastudio.notepro
+package ru.modemastudio.notepro.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import ru.modemastudio.notepro.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
