@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="ru.modemastudio.notepro.util.ExtensionsKt" />
+
+        <variable
+            name="note"
+            type="ru.modemastudio.notepro.model.Note" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/itemNoteTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{note.title}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Sample note title" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/itemNoteUpdatedAt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{ExtensionsKt.adaptiveString(note.updatedAt)}"
+            app:layout_constraintBaseline_toBaselineOf="@id/itemNoteTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="9 Dec 21:14" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/itemNoteCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{note.category.name}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/itemNoteTitle"
+            tools:text="Family" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

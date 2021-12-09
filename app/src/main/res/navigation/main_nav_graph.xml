@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/notesListFragment">
+
+    <fragment
+        android:id="@+id/notesListFragment"
+        android:name="ru.modemastudio.notepro.ui.notes_list.NotesListFragment"
+        android:label="NotesListFragment"
+        tools:layout="@layout/fragment_notes_list">
+        <action
+            android:id="@+id/action_notesList_to_noteDetails"
+            app:destination="@id/noteDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/noteDetailsFragment"
+        android:name="ru.modemastudio.notepro.ui.note_details.NoteDetailsFragment"
+        android:label="NoteDetailsFragment"
+        tools:layout="@layout/fragment_note_details">
+        <argument
+            android:name="noteId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
+</navigation>
