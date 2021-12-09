@@ -1,0 +1,42 @@
+package ru.modemastudio.notepro.model
+
+import androidx.room.*
+import ru.modemastudio.notepro.model.Note.Contract.tableName
+import java.util.*
+
+@Entity(tableName = tableName)
+data class Note(
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = Columns.id)
+    val noteId: Long,
+
+    @ColumnInfo(name = Columns.title)
+    var title: String,
+
+    @ColumnInfo(name = Columns.body)
+    var body: String,
+
+    @ColumnInfo(name = Columns.updatedAt)
+    var updatedAt: Date,
+
+    @ColumnInfo(name = Columns.isDeleted)
+    var isDeleted: Boolean = false,
+
+    @Embedded
+    val reminder: Reminder? = null,
+
+    @Embedded
+    val category: Category? = null
+) {
+    companion object Contract {
+        const val tableName = "notes"
+
+        object Columns {
+            const val id = "note_id"
+            const val title = "title"
+            const val body = "body"
+            const val updatedAt = "updated_at"
+            const val isDeleted = "is_deleted"
+        }
+    }
+}
