@@ -9,6 +9,7 @@ import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.Lifecycle.State.STARTED
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
@@ -114,17 +115,17 @@ class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
                 viewLifecycleOwner.lifecycleScope.launch { model.create() }
 
                 val action = NotesListFragmentDirections.actionNotesListToNoteDetails()
-//                findNavController().navigate(action)
+                //findNavController().navigate(action)
             }
             lifecycleOwner = viewLifecycleOwner
             notesListRecycler.adapter = recyclerAdapter
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewLifecycleOwner.repeatOnLifecycle(STARTED) {
                 model.getAllNotes().collect { notesList: List<Note> ->
+                    //binding.isEmpty = notesList.isEmpty()
                     recyclerAdapter.submitList(notesList)
-                    binding.isEmpty = notesList.isEmpty()
                 }
             }
         }

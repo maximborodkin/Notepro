@@ -37,5 +37,6 @@
 
     <string name="dark_theme_key">dark_theme</string>
     <string name="dark_theme">Dark theme</string>
+    <string name="empty_list_message">There is no one note in this list. Make first right now</string>
 
 </resources>

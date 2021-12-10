@@ -23,10 +23,11 @@
             tools:listitem="@layout/item_note" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/notesListEmptyMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:text="There is no one note in this list. Make first right now"
+            android:text="@string/empty_list_message"
             android:textAlignment="center"
             android:textSize="24sp"
             android:visibility="@{isEmpty ? View.VISIBLE : View.GONE}"
