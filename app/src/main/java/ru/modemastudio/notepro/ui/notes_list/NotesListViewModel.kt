@@ -5,12 +5,13 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.modemastudio.notepro.model.Note
 import ru.modemastudio.notepro.repository.NoteRepository
+import ru.modemastudio.notepro.util.dateTimeString
+import ru.modemastudio.notepro.util.like
+import timber.log.Timber
 import javax.inject.Inject
 
 class NotesListViewModel @Inject constructor(
@@ -19,11 +20,25 @@ class NotesListViewModel @Inject constructor(
 ) : AndroidViewModel(application) {
 
     val isDeletedShown = MutableStateFlow(false)
+    val searchQuery = MutableStateFlow<String?>(null)
 
     suspend fun getAllNotes(): Flow<List<Note>> =
-        notesRepository.getAllNotes().combine(isDeletedShown) { notes, isDeletedShown ->
-            if (isDeletedShown) notes else notes.filterNot { it.isDeleted }
-        }
+        notesRepository.getAllNotes()
+            .combine(isDeletedShown) { notes, isDeletedShown ->
+                if (isDeletedShown) notes else notes.filterNot { it.isDeleted }
+            }
+            .combine(searchQuery.debounce(200).map { it?.lowercase() }) { notes, searchQuery ->
+                Timber.d(searchQuery)
+                if (searchQuery.isNullOrBlank()) notes
+                else notes.filter { note ->
+                    note.title.like(searchQuery) ||
+                    note.body.like(searchQuery) ||
+                    note.category?.name.like(searchQuery) ||
+                    note.updatedAt.dateTimeString().like(searchQuery) ||
+                    note.reminder?.date?.dateTimeString().like(searchQuery) ||
+                    note.reminder?.priority?.name.like(searchQuery)
+                }
+            }
 
     suspend fun create() = notesRepository.create("Title", "Body", null, null)
 

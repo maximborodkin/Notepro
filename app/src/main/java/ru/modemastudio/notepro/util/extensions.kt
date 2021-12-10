@@ -46,8 +46,12 @@ fun Date?.adaptiveString(): String? = this?.let {
     } ${timeString()}"
 }
 
+// Extension to determine appComponent from any Contexts child
 val Context.appComponent: AppComponent
     get() = when (this) {
         is App -> appComponent
         else -> this.applicationContext.appComponent
     }
+
+fun String?.like(another: String?): Boolean =
+    another?.let { this?.trim()?.contains(it.trim(), true) } == true
