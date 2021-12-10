@@ -54,7 +54,8 @@ class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
                 true
             }
             R.id.notesListSettings -> {
-
+                val action = NotesListFragmentDirections.actionNotesListToPreferences()
+                findNavController().navigate(action)
                 true
             }
             else -> super.onOptionsItemSelected(item)

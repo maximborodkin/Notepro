@@ -85,6 +85,9 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-common-java8:$livedata_version"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$livedata_version"
 
+    // Preferences
+    implementation 'androidx.preference:preference-ktx:1.1.1'
+
     // Logging
     implementation 'com.jakewharton.timber:timber:5.0.1'
 }

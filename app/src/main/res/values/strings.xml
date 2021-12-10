@@ -1,11 +1,43 @@
 <resources>
+<!--  Shared  -->
     <string name="app_name">Notepro</string>
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
+
+<!--  NotesListFragment  -->
     <string name="add_note">Add note</string>
     <string name="note_moved_to_trash">Note moved to trash</string>
     <string name="undo">Undo</string>
     <string name="show_deleted">Show deleted</string>
     <string name="settings">Settings</string>
     <string name="search">Search</string>
+
+<!--  Preferences  -->
+    <string name="enable_autodelete_key">enable_autodelete</string>
+    <string name="enable_autodelete">Enable autodelete</string>
+    <string name="enable_autodelete_summary">Enable or disable deletion of notes after the established timeout</string>
+
+    <string name="autodelete_timeout_key">autodelete_timeout</string>
+    <string name="autodelete_timeout">Autodelete timeout</string>
+    <string name="autodelete_timeout_summary">Time, after which note will be deleted</string>
+    <string-array name="autodelete_timeout_entries">
+        <item>One hour</item>
+        <item>One day</item>
+        <item>One week</item>
+        <item>One month</item>
+        <item>Six months</item>
+        <item>One year</item>
+    </string-array>
+    <integer-array name="autodelete_timeout_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </integer-array>
+
+    <string name="dark_theme_key">dark_theme</string>
+    <string name="dark_theme">Dark theme</string>
+
 </resources>

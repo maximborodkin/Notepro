@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_notesList_to_noteDetails"
             app:destination="@id/noteDetailsFragment" />
+        <action
+            android:id="@+id/action_notesList_to_preferences"
+            app:destination="@id/preferencesFragment" />
     </fragment>
     <fragment
         android:id="@+id/noteDetailsFragment"
@@ -24,4 +27,9 @@
             app:argType="long"
             android:defaultValue="-1L" />
     </fragment>
+
+    <fragment
+        android:id="@+id/preferencesFragment"
+        android:name="ru.modemastudio.notepro.ui.preferences.PreferencesFragment"
+        tools:layout="PreferencesFragment"/>
 </navigation>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <SwitchPreferenceCompat
+        android:key="@string/enable_autodelete_key"
+        android:title="@string/enable_autodelete"
+        android:summary="@string/enable_autodelete_summary"
+        app:iconSpaceReserved="false"
+        app:defaultValue="false"/>
+
+    <ListPreference
+        android:key="@string/autodelete_timeout_key"
+        android:title="@string/autodelete_timeout"
+        android:summary="@string/autodelete_timeout_summary"
+        app:iconSpaceReserved="false"
+        android:dependency="enable_autodelete"
+        app:entries="@array/autodelete_timeout_entries"
+        app:entryValues="@array/autodelete_timeout_values"
+        app:defaultValue="6"/>
+
+    <SwitchPreferenceCompat
+        android:key="@string/dark_theme_key"
+        android:title="@string/dark_theme"
+        app:iconSpaceReserved="false"
+        app:defaultValue="false"/>
+</PreferenceScreen>
