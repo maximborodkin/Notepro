@@ -20,22 +20,20 @@
     <string name="autodelete_timeout_key">autodelete_timeout</string>
     <string name="autodelete_timeout">Autodelete timeout</string>
     <string name="autodelete_timeout_summary">Time, after which note will be deleted</string>
+    <string name="autodelete_timeout_one_hour">One hour</string>
+    <string name="autodelete_timeout_one_day">One day</string>
+    <string name="autodelete_timeout_one_week">One week</string>
+    <string name="autodelete_timeout_one_month">One month</string>
+    <string name="autodelete_timeout_six_months">Six months</string>
+    <string name="autodelete_timeout_one_year">One year</string>
     <string-array name="autodelete_timeout_entries">
-        <item>One hour</item>
-        <item>One day</item>
-        <item>One week</item>
-        <item>One month</item>
-        <item>Six months</item>
-        <item>One year</item>
+        <item>@string/autodelete_timeout_one_hour</item>
+        <item>@string/autodelete_timeout_one_day</item>
+        <item>@string/autodelete_timeout_one_week</item>
+        <item>@string/autodelete_timeout_one_month</item>
+        <item>@string/autodelete_timeout_six_months</item>
+        <item>@string/autodelete_timeout_one_year</item>
     </string-array>
-    <integer-array name="autodelete_timeout_values">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-    </integer-array>
 
     <string name="dark_theme_key">dark_theme</string>
     <string name="dark_theme">Dark theme</string>

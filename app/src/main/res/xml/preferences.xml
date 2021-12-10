@@ -14,10 +14,10 @@
         android:title="@string/autodelete_timeout"
         android:summary="@string/autodelete_timeout_summary"
         app:iconSpaceReserved="false"
-        android:dependency="enable_autodelete"
+        android:dependency="@string/enable_autodelete_key"
         app:entries="@array/autodelete_timeout_entries"
-        app:entryValues="@array/autodelete_timeout_values"
-        app:defaultValue="6"/>
+        app:entryValues="@array/autodelete_timeout_entries"
+        app:defaultValue="@string/autodelete_timeout_one_year"/>
 
     <SwitchPreferenceCompat
         android:key="@string/dark_theme_key"
