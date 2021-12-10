@@ -1,13 +1,14 @@
 package ru.modemastudio.notepro.persistence
 
 import android.content.Context
+import androidx.preference.PreferenceManager
 import dagger.Reusable
 import ru.modemastudio.notepro.R
 import javax.inject.Inject
 
 @Reusable
 class PreferencesManager @Inject constructor(context: Context) {
-    private val preferences = context.getSharedPreferences(preferencesName, Context.MODE_PRIVATE)
+    private val preferences = PreferenceManager.getDefaultSharedPreferences(context)
 
     private val enableAutodeleteKey = context.getString(R.string.enable_autodelete_key)
     private val autodeleteTimeoutKey = context.getString(R.string.autodelete_timeout_key)
@@ -29,8 +30,4 @@ class PreferencesManager @Inject constructor(context: Context) {
     }
 
     val darkTheme = preferences.getBoolean(darkThemeKey, false)
-
-    companion object {
-        private const val preferencesName = "notepro_preferences"
-    }
 }

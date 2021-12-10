@@ -103,10 +103,9 @@ class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
 
         with(binding) {
             notesListAddBtn.setOnClickListener {
-                viewLifecycleOwner.lifecycleScope.launch {
-                    model.create()
-                }
-//                val action = NotesListFragmentDirections.actionNotesListToNoteDetails()
+                viewLifecycleOwner.lifecycleScope.launch {  model.create()}
+
+                val action = NotesListFragmentDirections.actionNotesListToNoteDetails()
 //                findNavController().navigate(action)
             }
             lifecycleOwner = viewLifecycleOwner

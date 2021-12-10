@@ -37,13 +37,11 @@ fun Date?.timeString(): String? =
 fun Date?.adaptiveString(): String? = this?.let {
     val today = Calendar.getInstance()
     val date = Calendar.getInstance().apply { time = this@adaptiveString }
-    return "${
-        when {
-            date[DATE] == today[DATE] -> timeString()
-            date[YEAR] == today[YEAR] -> simpleDateString()
-            else -> dateString()
-        }
-    } ${timeString()}"
+    return when {
+        date[DATE] == today[DATE] -> timeString()
+        date[YEAR] == today[YEAR] -> "${simpleDateString()} ${timeString()}"
+        else -> "${dateString()} ${timeString()}"
+    }
 }
 
 // Extension to determine appComponent from any Contexts child
