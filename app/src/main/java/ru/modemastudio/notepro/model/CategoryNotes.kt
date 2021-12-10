@@ -8,7 +8,7 @@ data class CategoryNotes(
 
     @Relation(
         parentColumn = Category.Contract.Columns.id,
-        entityColumn= Note.Contract.Columns.id,
+        entityColumn= Note.Contract.Columns.noteId,
         entity = Note::class
     )
     val notes: List<Note>

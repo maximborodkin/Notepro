@@ -7,7 +7,7 @@ import java.util.*
 @Entity(tableName = tableName)
 data class Note(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = Columns.id)
+    @ColumnInfo(name = Columns.noteId)
     val noteId: Long,
 
     @ColumnInfo(name = Columns.title)
@@ -22,17 +22,17 @@ data class Note(
     @ColumnInfo(name = Columns.isDeleted)
     var isDeleted: Boolean = false,
 
-    @Embedded
+    @Embedded(prefix = "reminder_")
     val reminder: Reminder? = null,
 
-    @Embedded
+    @Embedded(prefix = "category_")
     val category: Category? = null
 ) {
     companion object Contract {
         const val tableName = "notes"
 
         object Columns {
-            const val id = "note_id"
+            const val noteId = "note_id"
             const val title = "title"
             const val body = "body"
             const val updatedAt = "updated_at"

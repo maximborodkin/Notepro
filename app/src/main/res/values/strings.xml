@@ -3,4 +3,6 @@
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
     <string name="add_note">Add note</string>
+    <string name="note_moved_to_trash">Note moved to trash</string>
+    <string name="undo">Undo</string>
 </resources>

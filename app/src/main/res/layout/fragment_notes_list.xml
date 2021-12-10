@@ -1,32 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/notesListRefresh"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+
+        <variable
+            name="isEmpty"
+            type="Boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/notesListRecycler"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_note" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/notesListRecycler"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:listitem="@layout/item_note"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="There is no one note in this list. Make first right now"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:visibility="@{isEmpty ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/notesListAddBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:contentDescription="@string/add_note"
-                android:src="@drawable/ic_add"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/notesListAddBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/add_note"
+            android:src="@drawable/ic_add"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

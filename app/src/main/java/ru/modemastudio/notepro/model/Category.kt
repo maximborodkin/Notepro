@@ -15,7 +15,7 @@ data class Category(
     val name: String
 ) {
     companion object Contract {
-        const val tableName = "tags"
+        const val tableName = "categories"
 
         object Columns {
             const val id = "category_id"
