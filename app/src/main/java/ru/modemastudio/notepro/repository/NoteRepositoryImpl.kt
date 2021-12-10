@@ -30,9 +30,9 @@ class NoteRepositoryImpl @Inject constructor(
         noteDao.getAllNotes().collect { notes ->
             notes.forEach { note ->
                 if (Date().time - note.updatedAt.time > autodeleteTime) {
-                    Timber.tag("EXPIRED_DELETION").i("Note ${note.noteId}(${note.title}) was " +
-                            "deleted cause expiration. lastUpdate:${note.updatedAt.time} + " +
-                            "expirationTime:${autodeleteTime}, now:${Date().time}")
+                    Timber.tag("EXPIRED_DELETION").i("""Note ${note.noteId}(${note.title}) was
+                            deleted cause expiration. lastUpdate:${note.updatedAt.time},
+                            expirationTime:${autodeleteTime}, now:${Date().time}""")
                     noteDao.delete(note)
                 }
             }

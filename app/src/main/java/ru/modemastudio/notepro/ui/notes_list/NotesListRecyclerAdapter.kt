@@ -18,7 +18,8 @@ import ru.modemastudio.notepro.ui.notes_list.NotesListRecyclerAdapter.NoteViewHo
 
 class NotesListRecyclerAdapter(
     private val onItemClick: (noteId: Long) -> Unit,
-    private val onItemSwipe: (noteId: Long) -> Unit
+    private val onItemSwipe: (noteId: Long) -> Unit,
+    private val onItemRestore: (noteId: Long) -> Unit
 ) : ListAdapter<Note, NoteViewHolder>(NoteDiffCallback) {
 
     init {
@@ -40,16 +41,24 @@ class NotesListRecyclerAdapter(
 
     override fun getItemId(position: Int): Long = getItem(position).noteId
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder =
-        NoteViewHolder(
-            ItemNoteBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        ).apply {
-            itemView.setOnClickListener { onItemClick(getItem(bindingAdapterPosition).noteId) }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
+        val binding = ItemNoteBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+
+        val holder = NoteViewHolder(binding)
+        binding.root.setOnClickListener {
+            onItemClick(getItem(holder.bindingAdapterPosition).noteId)
         }
+
+        binding.itemNoteRestoreBtn.setOnClickListener {
+            onItemRestore(getItem(holder.bindingAdapterPosition).noteId)
+        }
+
+        return holder
+    }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) =
         holder.bind(getItem(position))
@@ -61,12 +70,32 @@ class NotesListRecyclerAdapter(
         override fun areContentsTheSame(oldItem: Note, newItem: Note) = oldItem == newItem
     }
 
+    /**
+     * Generals gathered in their masses
+     * Just like witches at black messes
+     * Evil minds that plot destruction
+     * Sorcerer of death's construction
+     *
+     * In the fields the bodies burning
+     * As the war machine keeps turning
+     * Death and hatred to mankind
+     * Poisoning their brainwashed minds
+     * Oh, Lord, yeah
+     * */
     inner class SwipeToDeleteCallback : ItemTouchHelper.SimpleCallback(0, LEFT or RIGHT) {
         override fun onMove(
             p0: RecyclerView,
             p1: RecyclerView.ViewHolder,
             p2: RecyclerView.ViewHolder
         ) = false
+
+        // Prevent swipe-to-delete for already deleted notes
+        override fun getSwipeDirs(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder
+        ): Int =
+            if (getItem(viewHolder.bindingAdapterPosition).isDeleted) 0
+            else super.getSwipeDirs(recyclerView, viewHolder)
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) =
             onItemSwipe(getItem(viewHolder.bindingAdapterPosition).noteId)
@@ -80,10 +109,6 @@ class NotesListRecyclerAdapter(
             actionState: Int,
             isCurrentlyActive: Boolean
         ) {
-            val context = viewHolder.itemView.context
-            val swipeBackground = ColorDrawable(ContextCompat.getColor(context, R.color.swipe_red))
-            val deleteIcon = ContextCompat.getDrawable(context, R.drawable.ic_delete) ?: return
-
             super.onChildDraw(
                 c,
                 recyclerView,
@@ -93,6 +118,11 @@ class NotesListRecyclerAdapter(
                 actionState,
                 isCurrentlyActive
             )
+
+            val context = viewHolder.itemView.context
+            val swipeBackground = ColorDrawable(ContextCompat.getColor(context, R.color.swipe_red))
+            val deleteIcon = ContextCompat.getDrawable(context, R.drawable.ic_delete) ?: return
+
             val itemView = viewHolder.itemView
             val iconMargin = (itemView.height - deleteIcon.intrinsicHeight) / 2
             if (dX > 0) {

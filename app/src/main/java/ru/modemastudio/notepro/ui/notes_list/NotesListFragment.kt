@@ -51,6 +51,7 @@ class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
                 viewLifecycleOwner.lifecycleScope.launch {
                     model.isDeletedShown.emit(!model.isDeletedShown.value)
                 }
+                activity?.invalidateOptionsMenu()
                 true
             }
             R.id.notesListSettings -> {
@@ -64,6 +65,10 @@ class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
+        val icon =
+            if (model.isDeletedShown.value) R.drawable.ic_delete else R.drawable.ic_delete_off
+        menu.findItem(R.id.notesListShowDeleted).setIcon(icon)
+
         with(menu.findItem(R.id.notesListSearchView).actionView as SearchView) {
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean = true
@@ -98,12 +103,15 @@ class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
                     }
                     show()
                 }
+            },
+            onItemRestore = { noteId ->
+                model.restore(noteId)
             }
         )
 
         with(binding) {
             notesListAddBtn.setOnClickListener {
-                viewLifecycleOwner.lifecycleScope.launch {  model.create()}
+                viewLifecycleOwner.lifecycleScope.launch { model.create() }
 
                 val action = NotesListFragmentDirections.actionNotesListToNoteDetails()
 //                findNavController().navigate(action)

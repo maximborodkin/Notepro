@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
         <import type="ru.modemastudio.notepro.util.ExtensionsKt" />
 
         <variable
@@ -16,12 +17,25 @@
         android:layout_height="wrap_content"
         android:padding="12dp">
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/itemNoteRestoreBtn"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="12dp"
+            android:src="@drawable/ic_restore"
+            android:tint="@color/restore_blue"
+            android:visibility="@{note.deleted ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/itemNoteTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/itemNoteTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{note.title}"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/itemNoteRestoreBtn"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Sample note title" />
 
@@ -40,7 +54,7 @@
             android:layout_height="wrap_content"
             android:text="@{note.category.name}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/itemNoteRestoreBtn"
             app:layout_constraintTop_toBottomOf="@id/itemNoteTitle"
             tools:text="Family" />
     </androidx.constraintlayout.widget.ConstraintLayout>
