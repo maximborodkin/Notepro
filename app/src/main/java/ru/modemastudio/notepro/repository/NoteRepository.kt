@@ -11,4 +11,6 @@ interface NoteRepository {
     suspend fun create(title: String, body: String, reminder: Reminder?, category: Category?): Long
     suspend fun markAsDeleted(noteId: Long)
     suspend fun restore(noteId: Long)
+    suspend fun getById(noteId: Long): Note?
+    suspend fun save(note: Note): Long
 }

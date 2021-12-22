@@ -24,4 +24,12 @@
         android:title="@string/dark_theme"
         app:iconSpaceReserved="false"
         app:defaultValue="false"/>
+
+    <MultiSelectListPreference
+        android:key="@string/enabled_features_key"
+        android:title="@string/enabled_features"
+        app:iconSpaceReserved="false"
+        app:entries="@array/empty_array"
+        app:entryValues="@array/empty_array"/>
+
 </PreferenceScreen>

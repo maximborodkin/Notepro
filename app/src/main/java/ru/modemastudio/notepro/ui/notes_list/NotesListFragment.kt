@@ -8,7 +8,6 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Lifecycle.State.STARTED
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -31,8 +30,8 @@ class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
     private var recyclerAdapter by autoCleared<NotesListRecyclerAdapter>()
 
     override fun onAttach(context: Context) {
-        super.onAttach(context)
         context.appComponent.inject(this)
+        super.onAttach(context)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -112,10 +111,11 @@ class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
 
         with(binding) {
             notesListAddBtn.setOnClickListener {
-                viewLifecycleOwner.lifecycleScope.launch { model.create() }
-
-                val action = NotesListFragmentDirections.actionNotesListToNoteDetails()
-                //findNavController().navigate(action)
+                viewLifecycleOwner.lifecycleScope.launch {
+                    val noteId = model.create()
+                    val action = NotesListFragmentDirections.actionNotesListToNoteDetails(noteId)
+                    findNavController().navigate(action)
+                }
             }
             lifecycleOwner = viewLifecycleOwner
             notesListRecycler.adapter = recyclerAdapter

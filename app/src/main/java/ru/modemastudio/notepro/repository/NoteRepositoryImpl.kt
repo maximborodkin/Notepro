@@ -54,8 +54,10 @@ class NoteRepositoryImpl @Inject constructor(
             reminder = reminder,
             category = category
         )
-        noteDao.insert(note)
+        save(note)
     }
+
+    override suspend fun save(note: Note): Long = noteDao.insert(note)
 
     override suspend fun markAsDeleted(noteId: Long) = withContext(IO) {
         noteDao.markAsDeleted(noteId)
@@ -64,4 +66,6 @@ class NoteRepositoryImpl @Inject constructor(
     override suspend fun restore(noteId: Long) = withContext(IO) {
         noteDao.restore(noteId)
     }
+
+    override suspend fun getById(noteId: Long): Note? = noteDao.getById(noteId).firstOrNull()
 }

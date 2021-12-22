@@ -8,7 +8,10 @@ import dagger.Provides
 import dagger.Reusable
 import ru.modemastudio.notepro.persistence.database.NoteproDatabase
 import ru.modemastudio.notepro.persistence.database.dao.CategoryDao
+import ru.modemastudio.notepro.persistence.database.dao.FeatureDao
 import ru.modemastudio.notepro.persistence.database.dao.NoteDao
+import ru.modemastudio.notepro.repository.FeatureRepository
+import ru.modemastudio.notepro.repository.FeatureRepositoryImpl
 import ru.modemastudio.notepro.repository.NoteRepository
 import ru.modemastudio.notepro.repository.NoteRepositoryImpl
 import javax.inject.Singleton
@@ -38,10 +41,19 @@ object DataModule {
         return noteproDatabase.categoryDao()
     }
 
+    @Reusable
+    @Provides
+    fun provideFeatureDao(noteproDatabase: NoteproDatabase): FeatureDao {
+        return noteproDatabase.featureDao()
+    }
+
 }
 
 @Module
 interface DataModuleBinds {
     @Binds
     fun bindNoteRepository(noteRepositoryImpl: NoteRepositoryImpl): NoteRepository
+
+    @Binds
+    fun bindFeatureRepository(featureRepositoryImpl: FeatureRepositoryImpl): FeatureRepository
 }

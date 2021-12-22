@@ -12,9 +12,9 @@ import ru.modemastudio.notepro.repository.NoteRepository
 import ru.modemastudio.notepro.util.dateTimeString
 import ru.modemastudio.notepro.util.like
 import timber.log.Timber
-import javax.inject.Inject
+import java.util.*
 
-class NotesListViewModel @Inject constructor(
+class NotesListViewModel(
     application: Application,
     private val notesRepository: NoteRepository
 ) : AndroidViewModel(application) {
@@ -32,15 +32,15 @@ class NotesListViewModel @Inject constructor(
                 if (searchQuery.isNullOrBlank()) notes
                 else notes.filter { note ->
                     note.title.like(searchQuery) ||
-                    note.body.like(searchQuery) ||
-                    note.category?.name.like(searchQuery) ||
-                    note.updatedAt.dateTimeString().like(searchQuery) ||
-                    note.reminder?.date?.dateTimeString().like(searchQuery) ||
-                    note.reminder?.priority?.name.like(searchQuery)
+                            note.body.like(searchQuery) ||
+                            note.category?.name.like(searchQuery) ||
+                            note.updatedAt.dateTimeString().like(searchQuery) ||
+                            note.reminder?.date?.dateTimeString().like(searchQuery) ||
+                            note.reminder?.priority?.name.like(searchQuery)
                 }
             }
 
-    suspend fun create() = notesRepository.create("Title", "Body", null, null)
+    suspend fun create() = notesRepository.create(Date().dateTimeString(), String(), null, null)
 
     fun markAsDeleted(noteId: Long) = viewModelScope.launch {
         notesRepository.markAsDeleted(noteId)

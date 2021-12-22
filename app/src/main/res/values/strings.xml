@@ -39,4 +39,12 @@
     <string name="dark_theme">Dark theme</string>
     <string name="empty_list_message">There is no one note in this list. Make first right now</string>
 
+    <string name="onboarding_done_key">onboarding_done</string>
+    <string name="enabled_features_key">enabled_features</string>
+    <string name="enabled_features">Enabled features</string>
+    <string name="note_not_found">Note not found</string>
+    <string name="edit">Edit</string>
+
+    <string-array name="empty_array"/>
+
 </resources>

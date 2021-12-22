@@ -6,23 +6,23 @@ import ru.modemastudio.notepro.model.Note
 import ru.modemastudio.notepro.model.Note.Contract.Columns
 
 @Dao
-abstract class NoteDao {
+interface NoteDao {
 
     @Query("SELECT * FROM ${Note.tableName}")
-    abstract fun getAllNotes(): Flow<List<Note>>
+    fun getAllNotes(): Flow<List<Note>>
 
     @Query("SELECT * FROM ${Note.tableName} WHERE ${Columns.noteId}=:noteId")
-    abstract fun getById(noteId: Long): Flow<Note?>
+    fun getById(noteId: Long): Flow<Note?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun insert(note: Note): Long
+    suspend fun insert(note: Note): Long
 
     @Query("UPDATE ${Note.tableName} SET ${Columns.isDeleted}=1 WHERE ${Columns.noteId}=:noteId")
-    abstract fun markAsDeleted(noteId: Long)
+    fun markAsDeleted(noteId: Long)
 
     @Query("UPDATE ${Note.tableName} SET ${Columns.isDeleted}=0 WHERE ${Columns.noteId}=:noteId")
-    abstract fun restore(noteId: Long)
+    fun restore(noteId: Long)
 
     @Delete
-    abstract suspend fun delete(note: Note)
+    suspend fun delete(note: Note)
 }

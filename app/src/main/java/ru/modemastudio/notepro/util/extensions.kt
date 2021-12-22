@@ -1,6 +1,8 @@
 package ru.modemastudio.notepro.util
 
 import android.content.Context
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import android.widget.Toast.LENGTH_SHORT
@@ -16,16 +18,18 @@ fun Context.toast(resource: Int) = toast(getString(resource))
 fun Context.longToast(text: String?) = Toast.makeText(this, text, LENGTH_LONG).show()
 fun Context.longToast(resource: Int) = longToast(getString(resource))
 
-fun Date?.dateTimeString(): String? = this?.let { "${dateString()} ${timeString()}" }
+fun ViewGroup.addViews(views: List<View>) = views.forEach { addView(it) }
 
-fun Date?.dateString(): String? =
-    this?.let { SimpleDateFormat("d MMM yyyy", Locale.getDefault()).format(this) }
+fun Date?.dateTimeString(): String = this?.let { "${dateString()} ${timeString()}" } ?: String()
 
-fun Date?.simpleDateString(): String? =
-    this?.let { SimpleDateFormat("d MMMM", Locale.getDefault()).format(this) }
+fun Date?.dateString(): String =
+    this?.let { SimpleDateFormat("d MMM yyyy", Locale.getDefault()).format(this) } ?: String()
 
-fun Date?.timeString(): String? =
-    this?.let { SimpleDateFormat("HH:mm", Locale.getDefault()).format(this) }
+fun Date?.simpleDateString(): String =
+    this?.let { SimpleDateFormat("d MMMM", Locale.getDefault()).format(this) } ?: String()
+
+fun Date?.timeString(): String =
+    this?.let { SimpleDateFormat("HH:mm", Locale.getDefault()).format(this) } ?: String()
 
 /**
  * Extension function for [java.util.Date] class.
