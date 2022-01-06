@@ -12,7 +12,7 @@ class FeatureRepositoryImpl @Inject constructor(
 
     override suspend fun getAll(): Flow<List<Feature>> {
         if (featureDao.getAll().first().isEmpty()) {
-            featureDao.insert(Feature.getAllFeatures())
+            initialFill()
         }
         return featureDao.getAll()
     }
@@ -27,5 +27,17 @@ class FeatureRepositoryImpl @Inject constructor(
 
     override suspend fun disableFeature(featureId: Long) {
         featureDao.disableFeature(featureId)
+    }
+
+    private suspend fun initialFill() {
+        val features = listOf(
+            Feature.H1,
+            Feature.H2,
+            Feature.H3,
+            Feature.H4,
+            Feature.H5,
+            Feature.H6
+        )
+        featureDao.insert(features)
     }
 }

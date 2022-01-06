@@ -1,6 +1,7 @@
 package ru.modemastudio.notepro.ui.note_details
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -17,12 +18,18 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import io.noties.markwon.Markwon
 import io.noties.markwon.editor.MarkwonEditor
 import io.noties.markwon.editor.MarkwonEditorTextWatcher
+import io.noties.markwon.ext.strikethrough.StrikethroughPlugin
+import io.noties.markwon.ext.tables.TableAwareMovementMethod
 import io.noties.markwon.ext.tables.TablePlugin
+import io.noties.markwon.ext.tables.TableTheme
 import io.noties.markwon.ext.tasklist.TaskListPlugin
 import io.noties.markwon.html.HtmlPlugin
 import io.noties.markwon.image.ImagesPlugin
 import io.noties.markwon.image.data.DataUriSchemeHandler
 import io.noties.markwon.image.svg.SvgMediaDecoder
+import io.noties.markwon.linkify.LinkifyPlugin
+import io.noties.markwon.movement.MovementMethodPlugin
+import org.commonmark.ext.gfm.tables.TableBlock
 import ru.modemastudio.notepro.R
 import ru.modemastudio.notepro.databinding.FragmentNoteDetailsBinding
 import ru.modemastudio.notepro.util.addViews
@@ -105,15 +112,26 @@ class NoteDetailsFragment : Fragment(R.layout.fragment_note_details) {
 
     private fun initMarkwon() {
         val context = requireContext()
-        super.onAttach(context)
+
+        val tableTheme = TableTheme.buildWithDefaults(context)
+            .tableBorderColor(Color.BLACK)
+            .tableCellPadding(0)
+            .tableHeaderRowBackgroundColor(Color.rgb(150, 150, 150)) // Light gray
+            .tableEvenRowBackgroundColor(Color.WHITE)
+            .tableOddRowBackgroundColor(Color.rgb(200, 200, 200))
+            .build()
+
         val markwon: Markwon = Markwon.builder(context)
             .usePlugin(ImagesPlugin.create { plugin ->
                 plugin.addSchemeHandler(DataUriSchemeHandler.create())
                 plugin.addMediaDecoder(SvgMediaDecoder.create(resources))
             })
+            .usePlugin(LinkifyPlugin.create())
             .usePlugin(HtmlPlugin.create())
-            .usePlugin(TablePlugin.create(context))
+            .usePlugin(TablePlugin.create(tableTheme))
+            .usePlugin(MovementMethodPlugin.create(TableAwareMovementMethod.create()))
             .usePlugin(TaskListPlugin.create(context))
+            .usePlugin(StrikethroughPlugin.create())
             .build()
         val editor: MarkwonEditor = MarkwonEditor.create(markwon)
         binding.noteDetailsBottom.addTextChangedListener(MarkwonEditorTextWatcher.withProcess(editor))
