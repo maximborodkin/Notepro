@@ -44,6 +44,15 @@
     <string name="enabled_features">Enabled features</string>
     <string name="note_not_found">Note not found</string>
     <string name="edit">Edit</string>
+    <string name="rename_note">Rename note</string>
+    <string name="create_note">Create note</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="back">Back</string>
+    <string name="next">Next</string>
+    <string name="finish">Finish</string>
+    <string name="onboarding_first_description">To add a new note, click the «+» button</string>
+    <string name="underline"><![CDATA[<u>Underline</u>]]></string>
 
     <string-array name="empty_array"/>
 

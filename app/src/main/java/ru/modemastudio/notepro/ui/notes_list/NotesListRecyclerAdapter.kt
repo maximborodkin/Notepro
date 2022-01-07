@@ -18,6 +18,7 @@ import ru.modemastudio.notepro.ui.notes_list.NotesListRecyclerAdapter.NoteViewHo
 
 class NotesListRecyclerAdapter(
     private val onItemClick: (noteId: Long) -> Unit,
+    private val onItemLongClick: (noteId: Long) -> Unit,
     private val onItemSwipe: (noteId: Long) -> Unit,
     private val onItemRestore: (noteId: Long) -> Unit
 ) : ListAdapter<Note, NoteViewHolder>(NoteDiffCallback) {
@@ -49,8 +50,14 @@ class NotesListRecyclerAdapter(
         )
 
         val holder = NoteViewHolder(binding)
+
         binding.root.setOnClickListener {
             onItemClick(getItem(holder.bindingAdapterPosition).noteId)
+        }
+
+        binding.root.setOnLongClickListener {
+            onItemLongClick(getItem(holder.bindingAdapterPosition).noteId)
+            true
         }
 
         binding.itemNoteRestoreBtn.setOnClickListener {

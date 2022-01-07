@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="swipe_red">#F44336</color>
     <color name="restore_blue">#1E8EE7</color>
+    <color name="purple_base">#3A0044</color>
+    <color name="purple_light">#9656FF</color>
 </resources>

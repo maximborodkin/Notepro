@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.EditText
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle.State.STARTED
@@ -13,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -37,6 +39,7 @@ class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        activity?.title = getString(R.string.app_name)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -51,7 +54,7 @@ class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
                 viewLifecycleOwner.lifecycleScope.launch {
                     model.isDeletedShown.emit(!model.isDeletedShown.value)
                 }
-                activity?.invalidateOptionsMenu()
+                activity?.invalidateOptionsMenu() // Redraw menu to show different delete icon
                 true
             }
             R.id.notesListSettings -> {
@@ -66,7 +69,8 @@ class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         val icon =
-            if (model.isDeletedShown.value) R.drawable.ic_delete else R.drawable.ic_delete_off
+            if (model.isDeletedShown.value) R.drawable.ic_delete
+            else R.drawable.ic_delete_off
         menu.findItem(R.id.notesListShowDeleted).setIcon(icon)
 
         with(menu.findItem(R.id.notesListSearchView).actionView as SearchView) {
@@ -91,6 +95,14 @@ class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
                 val action = NotesListFragmentDirections.actionNotesListToNoteDetails(noteId)
                 findNavController().navigate(action)
             },
+            onItemLongClick = { noteId ->
+                viewLifecycleOwner.lifecycleScope.launch {
+                    val note = model.getById(noteId)?:return@launch
+                    NoteTitleDialog(requireContext(), note.title) { title ->
+                        model.update(note.copy(title = title))
+                    }
+                }
+            },
             onItemSwipe = { noteId ->
                 model.markAsDeleted(noteId)
                 Snackbar.make(
@@ -111,10 +123,12 @@ class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
 
         with(binding) {
             notesListAddBtn.setOnClickListener {
-                viewLifecycleOwner.lifecycleScope.launch {
-                    val noteId = model.create()
-                    val action = NotesListFragmentDirections.actionNotesListToNoteDetails(noteId)
-                    findNavController().navigate(action)
+                NoteTitleDialog(requireContext(), null) { title ->
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        val noteId = model.create(title)
+                        val action = NotesListFragmentDirections.actionNotesListToNoteDetails(noteId)
+                        findNavController().navigate(action)
+                    }
                 }
             }
             lifecycleOwner = viewLifecycleOwner

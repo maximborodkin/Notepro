@@ -40,7 +40,8 @@ class NotesListViewModel(
                 }
             }
 
-    suspend fun create() = notesRepository.create(Date().dateTimeString(), String(), null, null)
+    suspend fun create(title: String?) =
+        notesRepository.create(title ?: Date().dateTimeString(), String(), null, null)
 
     fun markAsDeleted(noteId: Long) = viewModelScope.launch {
         notesRepository.markAsDeleted(noteId)
@@ -49,6 +50,10 @@ class NotesListViewModel(
     fun restore(noteId: Long) = viewModelScope.launch {
         notesRepository.restore(noteId)
     }
+
+    suspend fun getById(noteId: Long): Note? = notesRepository.getById(noteId)
+
+    fun update(note: Note) = viewModelScope.launch { notesRepository.save(note) }
 
     class NotesListViewModelFactory(
         private val application: Application,

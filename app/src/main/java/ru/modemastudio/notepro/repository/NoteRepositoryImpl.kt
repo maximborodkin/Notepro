@@ -25,7 +25,7 @@ class NoteRepositoryImpl @Inject constructor(
     }
 
     private suspend fun deleteExpiredNotes() {
-        if (!preferencesManager.enableAutodelete) return
+        if (!preferencesManager.isAutodeleteEnabled) return
         val autodeleteTime = preferencesManager.autodeleteTimeout
         noteDao.getAllNotes().collect { notes ->
             notes.forEach { note ->

@@ -3,15 +3,36 @@ package ru.modemastudio.notepro.util
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import android.widget.Toast.LENGTH_SHORT
+import androidx.appcompat.content.res.AppCompatResources
 import ru.modemastudio.notepro.App
 import ru.modemastudio.notepro.di.AppComponent
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.Calendar.DATE
 import java.util.Calendar.YEAR
+
+fun TextView.setDrawableStart(drawableResource: Int) =
+    setCompoundDrawablesRelativeWithIntrinsicBounds(
+        AppCompatResources.getDrawable(context, drawableResource), //start
+        compoundDrawablesRelative[1],                              //top
+        compoundDrawablesRelative[2],                              //end
+        compoundDrawablesRelative[3]                               //bottom
+    )
+
+fun TextView.setDrawableEnd(drawableResource: Int) =
+    setCompoundDrawablesRelativeWithIntrinsicBounds(
+        this.compoundDrawablesRelative[0],                         //start
+        this.compoundDrawablesRelative[1],                         //top
+        AppCompatResources.getDrawable(context, drawableResource), //end
+        this.compoundDrawablesRelative[3]                          //bottom
+    )
+
+fun TextView.clearDrawables() =
+    setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
 
 fun Context.toast(text: String?) = Toast.makeText(this, text, LENGTH_SHORT).show()
 fun Context.toast(resource: Int) = toast(getString(resource))

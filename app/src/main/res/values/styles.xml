@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="BottomBarButton" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:textColor">?colorOnPrimary</item>
+        <item name="drawableTint">?colorOnPrimary</item>
+    </style>
+</resources>

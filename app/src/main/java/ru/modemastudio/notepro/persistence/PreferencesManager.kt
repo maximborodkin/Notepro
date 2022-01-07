@@ -16,9 +16,9 @@ class PreferencesManager @Inject constructor(context: Context) {
     private val onboardingDoneKey = context.getString(R.string.onboarding_done_key)
     val enabledFeaturesKey = context.getString(R.string.enabled_features_key)
 
-    val enableAutodelete = preferences.getBoolean(enableAutodeleteKey, false)
+    val isAutodeleteEnabled = preferences.getBoolean(enableAutodeleteKey, false)
 
-    // Returns milliseconds of selected timeout
+    // Returns milliseconds of a selected timeout
     val autodeleteTimeout: Long = with(context) {
         when (preferences.getString(autodeleteTimeoutKey, null)
         ) {
@@ -31,9 +31,9 @@ class PreferencesManager @Inject constructor(context: Context) {
         }
     }
 
-    val darkTheme = preferences.getBoolean(darkThemeKey, false)
+    val isDarkTheme = preferences.getBoolean(darkThemeKey, false)
 
-    var onboardingDone: Boolean
+    var isOnboardingDone: Boolean
         get() = preferences.getBoolean(onboardingDoneKey, false)
         set(value) = preferences.edit().putBoolean(onboardingDoneKey, value).apply()
 }

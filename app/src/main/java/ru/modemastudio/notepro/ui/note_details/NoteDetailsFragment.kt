@@ -8,11 +8,10 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
-import androidx.core.view.isVisible
+import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import io.noties.markwon.Markwon
@@ -29,11 +28,11 @@ import io.noties.markwon.image.data.DataUriSchemeHandler
 import io.noties.markwon.image.svg.SvgMediaDecoder
 import io.noties.markwon.linkify.LinkifyPlugin
 import io.noties.markwon.movement.MovementMethodPlugin
-import org.commonmark.ext.gfm.tables.TableBlock
 import ru.modemastudio.notepro.R
 import ru.modemastudio.notepro.databinding.FragmentNoteDetailsBinding
 import ru.modemastudio.notepro.util.addViews
 import ru.modemastudio.notepro.util.appComponent
+import ru.modemastudio.notepro.util.toast
 import javax.inject.Inject
 
 class NoteDetailsFragment : Fragment(R.layout.fragment_note_details) {
@@ -45,9 +44,9 @@ class NoteDetailsFragment : Fragment(R.layout.fragment_note_details) {
     private val model: NoteDetailsViewModel by viewModels { factory.create(args.noteId) }
 
     override fun onAttach(context: Context) {
+        super.onAttach(context)
         context.appComponent.inject(this)
         setHasOptionsMenu(true)
-        super.onAttach(context)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -55,10 +54,19 @@ class NoteDetailsFragment : Fragment(R.layout.fragment_note_details) {
         inflater.inflate(R.menu.menu_top_note_details, menu)
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        val icon =
+            if (model.isEditorVisible.value == true) R.drawable.ic_edit
+            else R.drawable.ic_edit_off
+        menu.findItem(R.id.noteDetailsEdit).setIcon(icon)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (item.itemId == R.id.noteDetailsEdit) {
             // show/hide note editor
             model.isEditorVisible.postValue(model.isEditorVisible.value?.not())
+            activity?.invalidateOptionsMenu() // Redraw menu to show different edit icon
             true
         } else super.onOptionsItemSelected(item)
     }

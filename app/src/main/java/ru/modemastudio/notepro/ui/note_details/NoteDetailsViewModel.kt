@@ -1,23 +1,16 @@
 package ru.modemastudio.notepro.ui.note_details
 
 import android.app.Application
-import androidx.annotation.StringRes
 import androidx.lifecycle.*
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import ru.modemastudio.notepro.R
 import ru.modemastudio.notepro.model.Feature
 import ru.modemastudio.notepro.model.Note
 import ru.modemastudio.notepro.repository.FeatureRepository
 import ru.modemastudio.notepro.repository.NoteRepository
-//import ru.modemastudio.notepro.ui.note_details.NoteDetailsViewModel.NoteDetailsState.*
 import javax.inject.Inject
 
 class NoteDetailsViewModel @Inject constructor(
@@ -37,7 +30,10 @@ class NoteDetailsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _note.postValue(noteRepository.getById(noteId))
+            noteRepository.getById(noteId)?.let { note ->
+                _note.postValue(note)
+                isEditorVisible.postValue(note.body.isBlank())
+            }
             _features.postValue(featureRepository.getEnabled().first())
         }
     }
@@ -57,7 +53,12 @@ class NoteDetailsViewModel @Inject constructor(
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(NoteDetailsViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return NoteDetailsViewModel(application, noteRepository, featureRepository, noteId) as T
+                return NoteDetailsViewModel(
+                    application,
+                    noteRepository,
+                    featureRepository,
+                    noteId
+                ) as T
             }
             throw IllegalArgumentException("Inappropriate ViewModel class ${modelClass.simpleName}")
         }
