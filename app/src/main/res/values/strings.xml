@@ -72,5 +72,7 @@
     <string name="onboarding_third_description">Use shortcut buttons on the editor screen</string>
     <string name="too_long_title">Too long title</string>
     <string name="title_is_required">Title is required</string>
+    <string name="delete_note">Delete note?</string>
+    <string name="It_cant_be_undone">It can\'t be undone</string>
 
 </resources>

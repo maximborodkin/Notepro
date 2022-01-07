@@ -6,7 +6,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.EditText
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle.State.STARTED
@@ -17,7 +16,6 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import ru.modemastudio.notepro.R
 import ru.modemastudio.notepro.databinding.FragmentNotesListBinding
@@ -33,14 +31,13 @@ class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
     private var recyclerAdapter by autoCleared<NotesListRecyclerAdapter>()
 
     override fun onAttach(context: Context) {
-        context.appComponent.inject(this)
         super.onAttach(context)
+        context.appComponent.inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        activity?.title = getString(R.string.app_name)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -91,17 +88,15 @@ class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        activity?.title = getString(R.string.app_name)
         recyclerAdapter = NotesListRecyclerAdapter(
             onItemClick = { noteId ->
                 val action = NotesListFragmentDirections.actionNotesListToNoteDetails(noteId)
                 findNavController().navigate(action)
             },
-            onItemLongClick = { noteId ->
-                viewLifecycleOwner.lifecycleScope.launch {
-                    val note = model.getById(noteId)?:return@launch
-                    NoteTitleDialog(requireContext(), note.title) { title ->
-                        model.update(note.copy(title = title))
-                    }
+            onItemLongClick = { note ->
+                NoteTitleDialog(requireContext(), note.title) { title ->
+                    model.update(note.copy(title = title))
                 }
             },
             onItemDismiss = { noteId ->
@@ -119,13 +114,13 @@ class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
             },
             onItemDelete = { note, adapterPosition ->
                 MaterialAlertDialogBuilder(requireContext()).apply {
-                    setTitle("Delete note?")
-                    setMessage("This cannot be undone")
-                    setPositiveButton("Ok") { dialog, _ ->
+                    setTitle(getString(R.string.delete_note))
+                    setMessage(getString(R.string.It_cant_be_undone))
+                    setPositiveButton(getString(R.string.ok)) { dialog, _ ->
                         model.delete(note)
                         dialog.dismiss()
                     }
-                    setNegativeButton("Cancel") {dialog, _ ->
+                    setNegativeButton(R.string.cancel) { dialog, _ ->
                         recyclerAdapter.notifyItemChanged(adapterPosition)
                         dialog.dismiss()
                     }
@@ -142,7 +137,8 @@ class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
                 NoteTitleDialog(requireContext(), null) { title ->
                     viewLifecycleOwner.lifecycleScope.launch {
                         val noteId = model.create(title)
-                        val action = NotesListFragmentDirections.actionNotesListToNoteDetails(noteId)
+                        val action =
+                            NotesListFragmentDirections.actionNotesListToNoteDetails(noteId)
                         findNavController().navigate(action)
                     }
                 }

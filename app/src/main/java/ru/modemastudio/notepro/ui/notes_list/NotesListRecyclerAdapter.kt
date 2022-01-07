@@ -19,7 +19,7 @@ import ru.modemastudio.notepro.ui.notes_list.NotesListRecyclerAdapter.NoteViewHo
 
 class NotesListRecyclerAdapter(
     private val onItemClick: (noteId: Long) -> Unit,
-    private val onItemLongClick: (noteId: Long) -> Unit,
+    private val onItemLongClick: (note: Note) -> Unit,
     private val onItemDismiss: (noteId: Long) -> Unit,
     private val onItemDelete: (note: Note, adapterPosition: Int) -> Unit,
     private val onItemRestore: (noteId: Long) -> Unit
@@ -58,7 +58,7 @@ class NotesListRecyclerAdapter(
         }
 
         binding.root.setOnLongClickListener {
-            onItemLongClick(getItem(holder.bindingAdapterPosition).noteId)
+            onItemLongClick(getItem(holder.bindingAdapterPosition))
             true
         }
 
