@@ -13,4 +13,5 @@ interface NoteRepository {
     suspend fun restore(noteId: Long)
     suspend fun getById(noteId: Long): Note?
     suspend fun save(note: Note): Long
+    suspend fun delete(note: Note)
 }

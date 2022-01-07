@@ -1,8 +1,10 @@
 <resources>
 <!--  Shared  -->
-    <string name="app_name">Notepro</string>
+    <string name="app_name" translatable="false">Note.pro</string>
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 
 <!--  NotesListFragment  -->
     <string name="add_note">Add note</string>
@@ -11,8 +13,9 @@
     <string name="show_deleted">Show deleted</string>
     <string name="settings">Settings</string>
     <string name="search">Search</string>
+    <string name="note_title">Note title</string>
 
-<!--  Preferences  -->
+    <!--  Preferences  -->
     <string name="enable_autodelete_key">enable_autodelete</string>
     <string name="enable_autodelete">Enable autodelete</string>
     <string name="enable_autodelete_summary">Enable or disable deletion of notes after the established timeout</string>
@@ -46,14 +49,28 @@
     <string name="edit">Edit</string>
     <string name="rename_note">Rename note</string>
     <string name="create_note">Create note</string>
-    <string name="ok">OK</string>
-    <string name="cancel">Cancel</string>
+
+
+<!--  Onboarding  -->
     <string name="back">Back</string>
     <string name="next">Next</string>
     <string name="finish">Finish</string>
-    <string name="onboarding_first_description">To add a new note, click the «+» button</string>
-    <string name="underline"><![CDATA[<u>Underline</u>]]></string>
 
-    <string-array name="empty_array"/>
+    <string name="onboarding_first_description">To add a new note, click the «+» button</string>
+
+    <string name="shopping_list">Shopping list</string>
+    <string name="home">Home</string>
+    <string name="onboarding_second_delete_description">Swipe a note to left or right to mark it as deleted</string>
+    <string name="backlog_analysis">Backlog analysis</string>
+    <string name="time_15_45">15:45</string>
+    <string name="work">Work</string>
+    <string name="onboarding_second_restore_description">Click the blue trash button to restore a note</string>
+
+    <string name="h1">H1</string>
+    <string name="bold">Bold</string>
+    <string name="italic">Italic</string>
+    <string name="onboarding_third_description">Use shortcut buttons on the editor screen</string>
+    <string name="too_long_title">Too long title</string>
+    <string name="title_is_required">Title is required</string>
 
 </resources>

@@ -1,6 +1,7 @@
 package ru.modemastudio.notepro.ui.notes_list
 
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -19,7 +20,8 @@ import ru.modemastudio.notepro.ui.notes_list.NotesListRecyclerAdapter.NoteViewHo
 class NotesListRecyclerAdapter(
     private val onItemClick: (noteId: Long) -> Unit,
     private val onItemLongClick: (noteId: Long) -> Unit,
-    private val onItemSwipe: (noteId: Long) -> Unit,
+    private val onItemDismiss: (noteId: Long) -> Unit,
+    private val onItemDelete: (note: Note, adapterPosition: Int) -> Unit,
     private val onItemRestore: (noteId: Long) -> Unit
 ) : ListAdapter<Note, NoteViewHolder>(NoteDiffCallback) {
 
@@ -96,16 +98,11 @@ class NotesListRecyclerAdapter(
             p2: RecyclerView.ViewHolder
         ) = false
 
-        // Prevent swipe-to-delete for already deleted notes
-        override fun getSwipeDirs(
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder
-        ): Int =
-            if (getItem(viewHolder.bindingAdapterPosition).isDeleted) 0
-            else super.getSwipeDirs(recyclerView, viewHolder)
-
-        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) =
-            onItemSwipe(getItem(viewHolder.bindingAdapterPosition).noteId)
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
+            val item = getItem(viewHolder.bindingAdapterPosition)
+            if (item.isDeleted) onItemDelete(item, viewHolder.bindingAdapterPosition)
+            else onItemDismiss(item.noteId)
+        }
 
         override fun onChildDraw(
             c: Canvas,
@@ -129,6 +126,7 @@ class NotesListRecyclerAdapter(
             val context = viewHolder.itemView.context
             val swipeBackground = ColorDrawable(ContextCompat.getColor(context, R.color.swipe_red))
             val deleteIcon = ContextCompat.getDrawable(context, R.drawable.ic_delete) ?: return
+            deleteIcon.setTint(Color.WHITE)
 
             val itemView = viewHolder.itemView
             val iconMargin = (itemView.height - deleteIcon.intrinsicHeight) / 2

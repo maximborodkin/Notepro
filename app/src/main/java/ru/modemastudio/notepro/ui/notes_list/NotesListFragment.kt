@@ -17,6 +17,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import ru.modemastudio.notepro.R
 import ru.modemastudio.notepro.databinding.FragmentNotesListBinding
@@ -103,7 +104,7 @@ class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
                     }
                 }
             },
-            onItemSwipe = { noteId ->
+            onItemDismiss = { noteId ->
                 model.markAsDeleted(noteId)
                 Snackbar.make(
                     view,
@@ -112,6 +113,21 @@ class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
                 ).apply {
                     setAction(R.string.undo) {
                         model.restore(noteId)
+                    }
+                    show()
+                }
+            },
+            onItemDelete = { note, adapterPosition ->
+                MaterialAlertDialogBuilder(requireContext()).apply {
+                    setTitle("Delete note?")
+                    setMessage("This cannot be undone")
+                    setPositiveButton("Ok") { dialog, _ ->
+                        model.delete(note)
+                        dialog.dismiss()
+                    }
+                    setNegativeButton("Cancel") {dialog, _ ->
+                        recyclerAdapter.notifyItemChanged(adapterPosition)
+                        dialog.dismiss()
                     }
                     show()
                 }

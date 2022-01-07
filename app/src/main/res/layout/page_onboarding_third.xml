@@ -4,71 +4,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple_base"
     tools:context=".ui.onboarding.OnboardingFragment">
 
-    <ScrollView
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/onboardingThirdButtonsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:paddingHorizontal="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        >
-        <androidx.appcompat.widget.LinearLayoutCompat
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="12dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="H1"
-                android:textSize="24sp"
-                android:clickable="false"
-                android:focusable="false"
-                android:layout_marginHorizontal="6dp"
-                android:backgroundTint="#666666"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/underline"
-                android:layout_marginHorizontal="6dp"
-                android:selectAllOnFocus="false"
-                android:linksClickable="false"
-                android:autoLink="all"
-                android:textAllCaps="false"
-                android:backgroundTint="#666666"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Bold"
-                android:textStyle="bold"
-                android:layout_marginHorizontal="6dp"
-                android:backgroundTint="#666666"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Italic"
-                android:textStyle="italic"
-                android:layout_marginHorizontal="6dp"
-                android:backgroundTint="#666666"/>
-        </androidx.appcompat.widget.LinearLayoutCompat>
-    </ScrollView>
+            android:layout_marginHorizontal="10dp"
+            android:backgroundTint="#666666"
+            android:clickable="false"
+            android:focusable="false"
+            android:text="@string/h1"
+            android:textSize="24sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:backgroundTint="#666666"
+            android:text="@string/bold"
+            android:textStyle="bold" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:backgroundTint="#666666"
+            android:text="@string/italic"
+            android:textStyle="italic" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <TextView
         android:id="@+id/onboardingSecondRestoreDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:paddingHorizontal="62dp"
-        android:paddingTop="12dp"
-        android:text="Use shortcut buttons on the editor screen"
+        android:text="@string/onboarding_third_description"
         android:textAlignment="center"
         android:textColor="?colorOnPrimary"
         android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/onboardingThirdButtonsLayout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -30,11 +30,13 @@
             android:text="@string/empty_list_message"
             android:textAlignment="center"
             android:textSize="24sp"
+            android:textColor="?colorOnPrimary"
             android:visibility="@{isEmpty ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/notesListAddBtn"
@@ -43,6 +45,7 @@
             android:layout_margin="16dp"
             android:contentDescription="@string/add_note"
             android:src="@drawable/ic_add"
+            android:backgroundTint="?colorOnPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

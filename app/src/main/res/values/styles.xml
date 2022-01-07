@@ -5,4 +5,33 @@
         <item name="android:textColor">?colorOnPrimary</item>
         <item name="drawableTint">?colorOnPrimary</item>
     </style>
+
+    <style name="ToolbarStyle" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:textColorPrimary">?colorOnPrimary</item>
+        <item name="android:colorControlNormal">?colorOnPrimary</item>
+        <item name="android:textColorHint">?colorOnPrimary</item>
+    </style>
+
+    <style name="AlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="colorSurface">@color/grey_light</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/AlertDialog.Title</item>
+        <item name="buttonBarPositiveButtonStyle">@style/AlertDialog.Button</item>
+        <item name="buttonBarNegativeButtonStyle">@style/AlertDialog.Button</item>
+        <item name="buttonBarNeutralButtonStyle">@style/AlertDialog.Button</item>
+        <item name="shapeAppearanceOverlay">@style/AlertDialog.Rounded</item>
+    </style>
+
+    <style name="AlertDialog.Rounded">
+        <item name="cornerSize">20dp</item>
+    </style>
+
+    <style name="AlertDialog.Title" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="AlertDialog.Button" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">#6750A4</item>
+        <item name="rippleColor">#6750A4</item>
+    </style>
 </resources>

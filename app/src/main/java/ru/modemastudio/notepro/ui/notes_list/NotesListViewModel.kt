@@ -47,6 +47,10 @@ class NotesListViewModel(
         notesRepository.markAsDeleted(noteId)
     }
 
+    fun delete(note: Note) = viewModelScope.launch {
+        notesRepository.delete(note)
+    }
+
     fun restore(noteId: Long) = viewModelScope.launch {
         notesRepository.restore(noteId)
     }

@@ -59,6 +59,8 @@ class NoteRepositoryImpl @Inject constructor(
 
     override suspend fun save(note: Note): Long = noteDao.insert(note)
 
+    override suspend fun delete(note: Note) = noteDao.delete(note)
+
     override suspend fun markAsDeleted(noteId: Long) = withContext(IO) {
         noteDao.markAsDeleted(noteId)
     }

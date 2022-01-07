@@ -26,16 +26,20 @@
             android:tint="@color/restore_blue"
             android:visibility="@{note.deleted ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/itemNoteTitle"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/itemNoteTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:maxLines="2"
             android:text="@{note.title}"
-            app:layout_constraintStart_toEndOf="@id/itemNoteRestoreBtn"
+            android:textColor="?colorOnPrimary"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toStartOf="@id/itemNoteUpdatedAt"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Sample note title" />
 
@@ -44,8 +48,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{ExtensionsKt.adaptiveString(note.updatedAt)}"
-            app:layout_constraintBaseline_toBaselineOf="@id/itemNoteTitle"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="?colorOnPrimary"
+            app:layout_constraintBottom_toBottomOf="@id/itemNoteTitle"
+            app:layout_constraintEnd_toStartOf="@id/itemNoteRestoreBtn"
+            app:layout_constraintTop_toTopOf="@id/itemNoteTitle"
             tools:text="9 Dec 21:14" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -53,9 +59,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{note.category.name}"
+            android:textColor="?colorOnPrimary"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/itemNoteRestoreBtn"
+            app:layout_constraintStart_toStartOf="@id/itemNoteTitle"
             app:layout_constraintTop_toBottomOf="@id/itemNoteTitle"
-            tools:text="Family" />
+            tools:text="Sample tag" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

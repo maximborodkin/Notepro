@@ -8,7 +8,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
-import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -32,7 +31,6 @@ import ru.modemastudio.notepro.R
 import ru.modemastudio.notepro.databinding.FragmentNoteDetailsBinding
 import ru.modemastudio.notepro.util.addViews
 import ru.modemastudio.notepro.util.appComponent
-import ru.modemastudio.notepro.util.toast
 import javax.inject.Inject
 
 class NoteDetailsFragment : Fragment(R.layout.fragment_note_details) {

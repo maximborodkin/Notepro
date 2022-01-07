@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple_base"
     tools:context=".ui.onboarding.OnboardingFragment">
 
     <View
@@ -44,7 +43,7 @@
         android:id="@+id/onboardingSecondDeleteTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Shopping list"
+        android:text="@string/shopping_list"
         app:layout_constraintStart_toEndOf="@id/onboardingSecondDeleteSwipeBackground"
         android:textColor="?colorOnPrimary"
         app:layout_constraintEnd_toEndOf="@id/onboardingSecondDeleteItemBackground"
@@ -55,7 +54,7 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Home"
+        android:text="@string/home"
         android:textColor="?colorOnPrimary"
         app:layout_constraintStart_toStartOf="@id/onboardingSecondDeleteTitle"
         app:layout_constraintTop_toBottomOf="@id/onboardingSecondDeleteTitle" />
@@ -88,7 +87,7 @@
             android:id="@+id/onboardingSecondRestoreTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Backlog analysis"
+            android:text="@string/backlog_analysis"
             app:layout_constraintStart_toEndOf="@id/onboardingSecondRestoreBtn"
             android:textColor="?colorOnPrimary"
             app:layout_constraintEnd_toStartOf="@id/itemNoteUpdatedAt"
@@ -98,7 +97,7 @@
             android:id="@+id/itemNoteUpdatedAt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="15:45"
+            android:text="@string/time_15_45"
             android:layout_marginEnd="12dp"
             android:textColor="?colorOnPrimary"
             app:layout_constraintBaseline_toBaselineOf="@id/onboardingSecondRestoreTitle"
@@ -108,7 +107,7 @@
             android:id="@+id/itemNoteCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Work"
+            android:text="@string/work"
             android:textColor="?colorOnPrimary"
             app:layout_constraintStart_toEndOf="@id/onboardingSecondRestoreBtn"
             app:layout_constraintTop_toBottomOf="@id/onboardingSecondRestoreTitle" />
@@ -120,7 +119,7 @@
         android:paddingHorizontal="62dp"
         android:paddingTop="12dp"
         android:paddingBottom="32dp"
-        android:text="Swipe a note to left or right to mark it as deleted"
+        android:text="@string/onboarding_second_delete_description"
         android:textAlignment="center"
         android:textColor="?colorOnPrimary"
         android:textSize="24sp"
@@ -135,7 +134,7 @@
         android:layout_height="wrap_content"
         android:paddingHorizontal="62dp"
         android:paddingTop="12dp"
-        android:text="Click the blue trash button to restore a note"
+        android:text="@string/onboarding_second_restore_description"
         android:textAlignment="center"
         android:textColor="?colorOnPrimary"
         android:textSize="24sp"

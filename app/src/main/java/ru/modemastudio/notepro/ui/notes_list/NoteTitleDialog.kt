@@ -1,15 +1,13 @@
 package ru.modemastudio.notepro.ui.notes_list
 
 import android.content.Context
-import android.view.ViewGroup
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.view.LayoutInflater
 import android.view.WindowManager.LayoutParams
-import android.widget.EditText
-import androidx.appcompat.widget.LinearLayoutCompat
-import androidx.core.view.updatePadding
+import androidx.appcompat.app.AlertDialog
+import androidx.core.widget.addTextChangedListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import ru.modemastudio.notepro.R
+import ru.modemastudio.notepro.databinding.AlertdialogEdittextBinding
 
 
 class NoteTitleDialog(
@@ -22,32 +20,37 @@ class NoteTitleDialog(
         val dialogTitle = if (title.isNullOrBlank()) R.string.create_note else R.string.rename_note
         setTitle(context.getString(dialogTitle))
 
-        // The container used for setting margins for the editText
-        val container = LinearLayoutCompat(context).apply {
-            updatePadding(left = 50, right = 50)
-            layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
-        }
-        val editText = EditText(context).apply {
-            maxLines = 10
-            layoutParams = LinearLayoutCompat.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
-            requestFocus()
+        val customView = AlertdialogEdittextBinding.inflate(LayoutInflater.from(context))
+        setView(customView.root)
+
+        with(customView.alertDialogEditText) {
             setText(title)
             setSelection(length())
+            requestFocus()
+            addTextChangedListener { customView.alertDialogEditTextLayout.error = null }
         }
-        container.addView(editText)
-        setView(container)
 
-        setPositiveButton(R.string.ok) { dialog, _ ->
-            val newTitle = editText.text.toString()
-            if (newTitle.isNotBlank()) {
-                onPositiveButtonClicked(newTitle)
-                dialog.dismiss()
-            }
-        }
+        setPositiveButton(R.string.ok, null)
         setNegativeButton(R.string.cancel) { dialog, _ -> dialog.dismiss() }
 
         val dialog = create()
         dialog.window?.setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_VISIBLE)
         dialog.show()
+
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+            val newTitle = customView.alertDialogEditText.text.toString()
+            if (newTitle.isNotBlank()) {
+                if (newTitle.length > 30) {
+                    customView.alertDialogEditTextLayout.error =
+                        context.getString(R.string.too_long_title)
+                } else {
+                    onPositiveButtonClicked(newTitle)
+                    dialog.dismiss()
+                }
+            } else {
+                customView.alertDialogEditTextLayout.error =
+                    context.getString(R.string.title_is_required)
+            }
+        }
     }
 }
