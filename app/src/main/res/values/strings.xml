@@ -15,6 +15,7 @@
     <string name="search">Search</string>
     <string name="note_title">Note title</string>
     <string name="empty_note">Empty note</string>
+    <string name="empty_list_message">There is no one note in this list. Disable filters or make a new one</string>
 
     <!--  Preferences  -->
     <string name="enable_autodelete_key">enable_autodelete</string>
@@ -41,7 +42,6 @@
 
     <string name="dark_theme_key">dark_theme</string>
     <string name="dark_theme">Dark theme</string>
-    <string name="empty_list_message">There is no one note in this list. Make first right now</string>
 
     <string name="onboarding_done_key">onboarding_done</string>
     <string name="enabled_features_key">enabled_features</string>

@@ -10,10 +10,7 @@ import ru.modemastudio.notepro.persistence.database.NoteproDatabase
 import ru.modemastudio.notepro.persistence.database.dao.CategoryDao
 import ru.modemastudio.notepro.persistence.database.dao.FeatureDao
 import ru.modemastudio.notepro.persistence.database.dao.NoteDao
-import ru.modemastudio.notepro.repository.FeatureRepository
-import ru.modemastudio.notepro.repository.FeatureRepositoryImpl
-import ru.modemastudio.notepro.repository.NoteRepository
-import ru.modemastudio.notepro.repository.NoteRepositoryImpl
+import ru.modemastudio.notepro.repository.*
 import javax.inject.Singleton
 
 @Module(includes = [DataModuleBinds::class])
@@ -56,4 +53,7 @@ interface DataModuleBinds {
 
     @Binds
     fun bindFeatureRepository(featureRepositoryImpl: FeatureRepositoryImpl): FeatureRepository
+
+    @Binds
+    fun bindCategoryRepository(categoryRepositoryImpl: CategoryRepositoryImpl): CategoryRepository
 }

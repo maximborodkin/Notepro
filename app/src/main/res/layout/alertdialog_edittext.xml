@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.textfield.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/alertDialogEditTextLayout"
-    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:hint="@string/note_title"
-    android:paddingHorizontal="16dp"
-    android:textColorHint="@color/grey_dark"
-    app:counterEnabled="true"
-    app:counterMaxLength="30"
-    app:counterTextColor="@color/grey_dark"
-    app:errorEnabled="true"
-    tools:background="@color/white">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/alertDialogEditText"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/alertDialogEditTextLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxLines="3"
-        android:textColor="@color/grey_dark"
-        tools:text="New note name" />
-</com.google.android.material.textfield.TextInputLayout>
+        android:hint="@string/note_title"
+        android:paddingHorizontal="16dp"
+        android:textColorHint="@color/grey_dark"
+        app:counterEnabled="true"
+        app:counterMaxLength="30"
+        app:counterTextColor="@color/grey_dark"
+        app:errorEnabled="true"
+        tools:background="@color/white">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/alertDialogEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="3"
+            android:textColor="@color/grey_dark"
+            tools:text="New note name" />
+    </com.google.android.material.textfield.TextInputLayout>
+</layout>

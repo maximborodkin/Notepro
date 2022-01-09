@@ -1,61 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.onboarding.OnboardingFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/onboardingThirdButtonsLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingHorizontal="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        tools:context=".ui.onboarding.OnboardingFragment">
 
-        <Button
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/onboardingThirdButtonsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:backgroundTint="#666666"
+                android:clickable="false"
+                android:focusable="false"
+                android:text="@string/h1"
+                android:textSize="24sp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:backgroundTint="#666666"
+                android:text="@string/bold"
+                android:textStyle="bold" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:backgroundTint="#666666"
+                android:text="@string/italic"
+                android:textStyle="italic" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <TextView
+            android:id="@+id/onboardingSecondRestoreDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:backgroundTint="#666666"
-            android:clickable="false"
-            android:focusable="false"
-            android:text="@string/h1"
-            android:textSize="24sp" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:backgroundTint="#666666"
-            android:text="@string/bold"
-            android:textStyle="bold" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:backgroundTint="#666666"
-            android:text="@string/italic"
-            android:textStyle="italic" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <TextView
-        android:id="@+id/onboardingSecondRestoreDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:paddingHorizontal="62dp"
-        android:text="@string/onboarding_third_description"
-        android:textAlignment="center"
-        android:textColor="?colorOnPrimary"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/onboardingThirdButtonsLayout" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_marginTop="24dp"
+            android:paddingHorizontal="62dp"
+            android:text="@string/onboarding_third_description"
+            android:textAlignment="center"
+            android:textColor="?colorOnPrimary"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/onboardingThirdButtonsLayout" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

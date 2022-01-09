@@ -7,27 +7,30 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle.State.STARTED
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import ru.modemastudio.notepro.R
 import ru.modemastudio.notepro.databinding.FragmentNotesListBinding
+import ru.modemastudio.notepro.model.Category
 import ru.modemastudio.notepro.model.Note
 import ru.modemastudio.notepro.util.appComponent
 import ru.modemastudio.notepro.util.autoCleared
+import timber.log.Timber
 import javax.inject.Inject
 
 class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
     @Inject
     lateinit var model: NotesListViewModel
-    private val binding by viewBinding(FragmentNotesListBinding::bind)
+    private lateinit var binding: FragmentNotesListBinding
     private var recyclerAdapter by autoCleared<NotesListRecyclerAdapter>()
 
     override fun onAttach(context: Context) {
@@ -88,6 +91,7 @@ class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentNotesListBinding.bind(view)
         activity?.title = getString(R.string.app_name)
         recyclerAdapter = NotesListRecyclerAdapter(
             onItemClick = { noteId ->
@@ -150,7 +154,45 @@ class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(STARTED) {
                 model.getAllNotes().collect { notesList: List<Note> ->
+                    binding.isEmpty = notesList.isEmpty()
                     recyclerAdapter.submitList(notesList)
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(STARTED) {
+                val scope = this
+                model.getAllCategories().collect { categoriesList: List<Category> ->
+                    binding.notesListFilterChipsLayout.removeAllViews()
+
+                    categoriesList.forEach { category: Category ->
+
+                        Chip(requireContext()).apply {
+                            id = View.generateViewId()
+                            tag = this.hashCode()
+                            text = category.name
+                            isCheckable = true
+                            isCheckedIconVisible = false
+                            chipBackgroundColor =
+                                ContextCompat.getColorStateList(
+                                    requireContext(),
+                                    R.color.chip_color_selector
+                                )
+
+                            isChecked = category in model.selectedCategories.value
+                            setOnCheckedChangeListener { _, isChecked ->
+
+                                val newCategories = model.selectedCategories.value.apply {
+                                    if (isChecked) add(category) else remove(category)
+                                }
+                                Timber.tag("NOTES_FILTER").d("selectedCategories: $newCategories")
+                                model.updateCategories(newCategories)
+                            }
+
+                            binding.notesListFilterChipsLayout.addView(this)
+                        }
+                    }
                 }
             }
         }

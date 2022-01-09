@@ -1,104 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.onboarding.OnboardingFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <View
-        android:id="@+id/onboardingSecondDeleteItemBackground"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:background="@color/purple_light"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginHorizontal="12dp"
-        app:layout_constraintVertical_bias="0.4"/>
+        android:layout_height="match_parent"
+        tools:context=".ui.onboarding.OnboardingFragment">
 
-    <View
-        android:id="@+id/onboardingSecondDeleteSwipeBackground"
-        android:layout_width="100dp"
-        android:layout_height="72dp"
-        android:background="@color/swipe_red"
-        app:layout_constraintStart_toStartOf="@id/onboardingSecondDeleteItemBackground"
-        app:layout_constraintTop_toTopOf="@id/onboardingSecondDeleteItemBackground"
-        app:layout_constraintBottom_toBottomOf="@id/onboardingSecondDeleteItemBackground"/>
+        <View
+            android:id="@+id/onboardingSecondDeleteItemBackground"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_marginHorizontal="12dp"
+            android:background="@color/purple_light"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.4" />
 
-    <ImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@drawable/ic_delete"
-        app:tint="@color/white"
-        app:layout_constraintStart_toStartOf="@id/onboardingSecondDeleteItemBackground"
-        app:layout_constraintTop_toTopOf="@id/onboardingSecondDeleteItemBackground"
-        app:layout_constraintBottom_toBottomOf="@id/onboardingSecondDeleteItemBackground"
-        android:layout_marginStart="12dp"
-        tools:ignore="ContentDescription" />
+        <View
+            android:id="@+id/onboardingSecondDeleteSwipeBackground"
+            android:layout_width="100dp"
+            android:layout_height="72dp"
+            android:background="@color/swipe_red"
+            app:layout_constraintBottom_toBottomOf="@id/onboardingSecondDeleteItemBackground"
+            app:layout_constraintStart_toStartOf="@id/onboardingSecondDeleteItemBackground"
+            app:layout_constraintTop_toTopOf="@id/onboardingSecondDeleteItemBackground" />
 
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/onboardingSecondDeleteTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/shopping_list"
-        app:layout_constraintStart_toEndOf="@id/onboardingSecondDeleteSwipeBackground"
-        android:textColor="?colorOnPrimary"
-        app:layout_constraintEnd_toEndOf="@id/onboardingSecondDeleteItemBackground"
-        app:layout_constraintTop_toTopOf="@id/onboardingSecondDeleteItemBackground"
-        android:layout_marginTop="12dp"
-        android:layout_marginStart="12dp"/>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/home"
-        android:textColor="?colorOnPrimary"
-        app:layout_constraintStart_toStartOf="@id/onboardingSecondDeleteTitle"
-        app:layout_constraintTop_toBottomOf="@id/onboardingSecondDeleteTitle" />
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="12dp"
+            android:src="@drawable/ic_delete"
+            app:layout_constraintBottom_toBottomOf="@id/onboardingSecondDeleteItemBackground"
+            app:layout_constraintStart_toStartOf="@id/onboardingSecondDeleteItemBackground"
+            app:layout_constraintTop_toTopOf="@id/onboardingSecondDeleteItemBackground"
+            app:tint="@color/white"
+            tools:ignore="ContentDescription" />
 
 
-    <View
-        android:id="@+id/onboardingSecondRestoreItemBackground"
-        android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:background="@color/purple_light"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/onboardingSecondDeleteDescription"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/onboardingSecondRestoreDescription"
-        android:layout_marginHorizontal="12dp" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/onboardingSecondDeleteTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:text="@string/shopping_list"
+            android:textColor="?colorOnPrimary"
+            app:layout_constraintEnd_toEndOf="@id/onboardingSecondDeleteItemBackground"
+            app:layout_constraintStart_toEndOf="@id/onboardingSecondDeleteSwipeBackground"
+            app:layout_constraintTop_toTopOf="@id/onboardingSecondDeleteItemBackground" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/home"
+            android:textColor="?colorOnPrimary"
+            app:layout_constraintStart_toStartOf="@id/onboardingSecondDeleteTitle"
+            app:layout_constraintTop_toBottomOf="@id/onboardingSecondDeleteTitle" />
+
+
+        <View
+            android:id="@+id/onboardingSecondRestoreItemBackground"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_marginHorizontal="12dp"
+            android:background="@color/purple_light"
+            app:layout_constraintBottom_toTopOf="@id/onboardingSecondRestoreDescription"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/onboardingSecondDeleteDescription" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/onboardingSecondRestoreBtn"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:padding="12dp"
             android:layout_marginStart="12dp"
+            android:padding="12dp"
             android:src="@drawable/ic_restore"
             android:tint="@color/restore_blue"
+            app:layout_constraintBottom_toBottomOf="@id/onboardingSecondRestoreItemBackground"
             app:layout_constraintStart_toStartOf="@id/onboardingSecondRestoreItemBackground"
-            app:layout_constraintTop_toTopOf="@id/onboardingSecondRestoreItemBackground"
-            app:layout_constraintBottom_toBottomOf="@id/onboardingSecondRestoreItemBackground" />
+            app:layout_constraintTop_toTopOf="@id/onboardingSecondRestoreItemBackground" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/onboardingSecondRestoreTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/backlog_analysis"
-            app:layout_constraintStart_toEndOf="@id/onboardingSecondRestoreBtn"
             android:textColor="?colorOnPrimary"
             app:layout_constraintEnd_toStartOf="@id/itemNoteUpdatedAt"
+            app:layout_constraintStart_toEndOf="@id/onboardingSecondRestoreBtn"
             app:layout_constraintTop_toTopOf="@id/onboardingSecondRestoreBtn" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/itemNoteUpdatedAt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/time_15_45"
             android:layout_marginEnd="12dp"
+            android:text="@string/time_15_45"
             android:textColor="?colorOnPrimary"
             app:layout_constraintBaseline_toBaselineOf="@id/onboardingSecondRestoreTitle"
             app:layout_constraintEnd_toEndOf="@id/onboardingSecondRestoreItemBackground" />
@@ -112,33 +114,34 @@
             app:layout_constraintStart_toEndOf="@id/onboardingSecondRestoreBtn"
             app:layout_constraintTop_toBottomOf="@id/onboardingSecondRestoreTitle" />
 
-    <TextView
-        android:id="@+id/onboardingSecondDeleteDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="62dp"
-        android:paddingTop="12dp"
-        android:paddingBottom="32dp"
-        android:text="@string/onboarding_second_delete_description"
-        android:textAlignment="center"
-        android:textColor="?colorOnPrimary"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintTop_toBottomOf="@id/onboardingSecondDeleteItemBackground"
-        app:layout_constraintBottom_toTopOf="@id/onboardingSecondRestoreItemBackground"/>
+        <TextView
+            android:id="@+id/onboardingSecondDeleteDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="62dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="32dp"
+            android:text="@string/onboarding_second_delete_description"
+            android:textAlignment="center"
+            android:textColor="?colorOnPrimary"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@id/onboardingSecondRestoreItemBackground"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/onboardingSecondDeleteItemBackground" />
 
-    <TextView
-        android:id="@+id/onboardingSecondRestoreDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="62dp"
-        android:paddingTop="12dp"
-        android:text="@string/onboarding_second_restore_description"
-        android:textAlignment="center"
-        android:textColor="?colorOnPrimary"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/onboardingSecondRestoreItemBackground" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/onboardingSecondRestoreDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="62dp"
+            android:paddingTop="12dp"
+            android:text="@string/onboarding_second_restore_description"
+            android:textAlignment="center"
+            android:textColor="?colorOnPrimary"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/onboardingSecondRestoreItemBackground" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -5,22 +5,31 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import ru.modemastudio.notepro.model.Category
 import ru.modemastudio.notepro.model.Note
 import ru.modemastudio.notepro.repository.NoteRepository
+import ru.modemastudio.notepro.repository.CategoryRepository
 import ru.modemastudio.notepro.util.dateTimeString
 import ru.modemastudio.notepro.util.like
 import timber.log.Timber
 import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
+import kotlin.collections.HashSet
 
 class NotesListViewModel(
     application: Application,
-    private val notesRepository: NoteRepository
+    private val notesRepository: NoteRepository,
+    private val categoryRepository: CategoryRepository
 ) : AndroidViewModel(application) {
 
     val isDeletedShown = MutableStateFlow(false)
     val searchQuery = MutableStateFlow<String?>(null)
+
+    val selectedCategories = MutableStateFlow(HashSet<Category>())
 
     suspend fun getAllNotes(): Flow<List<Note>> =
         notesRepository.getAllNotes()
@@ -39,6 +48,17 @@ class NotesListViewModel(
                             note.reminder?.priority?.name.like(searchQuery)
                 }
             }
+            .combine(selectedCategories) { notes, selectedCategories ->
+                if (selectedCategories.isEmpty()) notes
+                else notes.filter { it.category in selectedCategories }
+            }
+
+    suspend fun getAllCategories(): Flow<List<Category>> =
+        categoryRepository.getAllCategories()
+
+    fun updateCategories(newCategories: HashSet<Category>) = viewModelScope.launch(IO) {
+        selectedCategories.emit(newCategories)
+    }
 
     suspend fun create(title: String?) =
         notesRepository.create(title ?: Date().dateTimeString(), String(), null, null)
@@ -61,12 +81,13 @@ class NotesListViewModel(
 
     class NotesListViewModelFactory(
         private val application: Application,
-        private val notesRepository: NoteRepository
+        private val notesRepository: NoteRepository,
+        private val categoryRepository: CategoryRepository
     ) : ViewModelProvider.AndroidViewModelFactory(application) {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(NotesListViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return NotesListViewModel(application, notesRepository) as T
+                return NotesListViewModel(application, notesRepository, categoryRepository) as T
             }
             throw IllegalArgumentException("Inappropriate ViewModel class ${modelClass.simpleName}")
         }
