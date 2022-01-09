@@ -5,6 +5,7 @@
 
     <data>
         <import type="android.view.View" />
+        <import type="kotlin.text.StringsKt" />
         <import type="ru.modemastudio.notepro.util.ExtensionsKt" />
 
         <variable
@@ -15,7 +16,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp">
+        android:paddingVertical="6dp">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/itemNoteRestoreBtn"
@@ -33,7 +34,8 @@
             android:id="@+id/itemNoteTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="12dp"
+
+            android:layout_marginHorizontal="12dp"
             android:maxLines="1"
             android:text="@{note.title}"
             android:textColor="?colorOnPrimary"
@@ -52,13 +54,15 @@
             app:layout_constraintBottom_toBottomOf="@id/itemNoteTitle"
             app:layout_constraintEnd_toStartOf="@id/itemNoteRestoreBtn"
             app:layout_constraintTop_toTopOf="@id/itemNoteTitle"
+            app:layout_goneMarginEnd="12dp"
             tools:text="9 Dec 21:14" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/itemNoteCategory"
+            android:id="@+id/itemNoteBody"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{note.category.name}"
+            android:maxLines="1"
+            android:text="@{StringsKt.isBlank(note.body) ? @string/empty_note : note.body}"
             android:textColor="?colorOnPrimary"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -104,7 +104,7 @@
             app:layout_constraintEnd_toEndOf="@id/onboardingSecondRestoreItemBackground" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/itemNoteCategory"
+            android:id="@+id/itemNoteBody"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/work"

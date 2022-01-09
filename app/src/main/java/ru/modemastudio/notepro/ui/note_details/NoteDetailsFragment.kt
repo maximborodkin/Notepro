@@ -77,6 +77,10 @@ class NoteDetailsFragment : Fragment(R.layout.fragment_note_details) {
             model.note.observe(viewLifecycleOwner) {
                 activity?.title = it.title
             }
+            model.isEditorVisible.observe(viewLifecycleOwner) {
+                // Redraw menu to show different edit icon if isEditorVisible was changed from ViewModel
+                activity?.invalidateOptionsMenu()
+            }
             val featureButtons = arrayListOf<Button>()
             model.features.observe(viewLifecycleOwner) {
                 it.forEach { feature ->

@@ -150,7 +150,6 @@ class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(STARTED) {
                 model.getAllNotes().collect { notesList: List<Note> ->
-                    //binding.isEmpty = notesList.isEmpty()
                     recyclerAdapter.submitList(notesList)
                 }
             }
