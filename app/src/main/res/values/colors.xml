@@ -6,7 +6,7 @@
     <color name="grey_dark">#49454F</color>
     <color name="grey_light">#C4C4C4</color>
     <color name="swipe_red">#F44336</color>
-    <color name="restore_blue">#6750A4</color>
     <color name="purple_base">#3A0044</color>
-    <color name="purple_light">#F073F2</color>
+    <color name="purple_light">#A252A3</color>
+    <color name="purple">#6750A4</color>
 </resources>

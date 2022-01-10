@@ -24,26 +24,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
-                android:backgroundTint="#666666"
+                android:backgroundTint="?colorSurface"
                 android:clickable="false"
                 android:focusable="false"
                 android:text="@string/h1"
-                android:textSize="24sp" />
+                android:textColor="?colorOnSurface"
+                android:textSize="21sp" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
-                android:backgroundTint="#666666"
+                android:backgroundTint="?colorSurface"
+                android:clickable="false"
+                android:focusable="false"
                 android:text="@string/bold"
+                android:textColor="?colorOnSurface"
                 android:textStyle="bold" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
-                android:backgroundTint="#666666"
+                android:backgroundTint="?colorSurface"
+                android:clickable="false"
+                android:focusable="false"
                 android:text="@string/italic"
+                android:textColor="?colorOnSurface"
                 android:textStyle="italic" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 

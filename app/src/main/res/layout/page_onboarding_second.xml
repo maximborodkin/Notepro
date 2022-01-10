@@ -8,23 +8,30 @@
         android:layout_height="match_parent"
         tools:context=".ui.onboarding.OnboardingFragment">
 
-        <View
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/onboardingSecondDeleteItemBackground"
             android:layout_width="match_parent"
             android:layout_height="72dp"
             android:layout_marginHorizontal="12dp"
-            android:background="@color/purple_light"
+            android:layout_marginTop="40dp"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="12dp"
+            app:cardForegroundColor="?colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.4" />
+            app:layout_constraintVertical_bias="0.3"
+            app:strokeColor="?colorOnPrimary"
+            app:strokeWidth="1dp" />
 
         <View
             android:id="@+id/onboardingSecondDeleteSwipeBackground"
             android:layout_width="100dp"
-            android:layout_height="72dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="1dp"
             android:background="@color/swipe_red"
+            android:elevation="12dp"
             app:layout_constraintBottom_toBottomOf="@id/onboardingSecondDeleteItemBackground"
             app:layout_constraintStart_toStartOf="@id/onboardingSecondDeleteItemBackground"
             app:layout_constraintTop_toTopOf="@id/onboardingSecondDeleteItemBackground" />
@@ -33,6 +40,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginStart="12dp"
+            android:elevation="12dp"
             android:src="@drawable/ic_delete"
             app:layout_constraintBottom_toBottomOf="@id/onboardingSecondDeleteItemBackground"
             app:layout_constraintStart_toStartOf="@id/onboardingSecondDeleteItemBackground"
@@ -47,6 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:elevation="12dp"
             android:text="@string/shopping_list"
             android:textColor="?colorOnPrimary"
             app:layout_constraintEnd_toEndOf="@id/onboardingSecondDeleteItemBackground"
@@ -56,31 +65,38 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:elevation="12dp"
             android:text="@string/home"
             android:textColor="?colorOnPrimary"
             app:layout_constraintStart_toStartOf="@id/onboardingSecondDeleteTitle"
             app:layout_constraintTop_toBottomOf="@id/onboardingSecondDeleteTitle" />
 
 
-        <View
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/onboardingSecondRestoreItemBackground"
             android:layout_width="match_parent"
             android:layout_height="72dp"
             android:layout_marginHorizontal="12dp"
-            android:background="@color/purple_light"
+            android:elevation="12dp"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="12dp"
+            app:cardForegroundColor="?colorPrimary"
             app:layout_constraintBottom_toTopOf="@id/onboardingSecondRestoreDescription"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/onboardingSecondDeleteDescription" />
+            app:layout_constraintTop_toBottomOf="@id/onboardingSecondDeleteDescription"
+            app:strokeColor="@color/white"
+            app:strokeWidth="1dp" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/onboardingSecondRestoreBtn"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="12dp"
+            android:elevation="12dp"
             android:padding="12dp"
             android:src="@drawable/ic_restore"
-            android:tint="@color/restore_blue"
+            android:tint="?colorControlNormal"
             app:layout_constraintBottom_toBottomOf="@id/onboardingSecondRestoreItemBackground"
             app:layout_constraintStart_toStartOf="@id/onboardingSecondRestoreItemBackground"
             app:layout_constraintTop_toTopOf="@id/onboardingSecondRestoreItemBackground" />
@@ -89,6 +105,7 @@
             android:id="@+id/onboardingSecondRestoreTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:elevation="12dp"
             android:text="@string/backlog_analysis"
             android:textColor="?colorOnPrimary"
             app:layout_constraintEnd_toStartOf="@id/itemNoteUpdatedAt"
@@ -100,6 +117,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
+            android:elevation="12dp"
             android:text="@string/time_15_45"
             android:textColor="?colorOnPrimary"
             app:layout_constraintBaseline_toBaselineOf="@id/onboardingSecondRestoreTitle"
@@ -109,6 +127,7 @@
             android:id="@+id/itemNoteBody"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:elevation="12dp"
             android:text="@string/work"
             android:textColor="?colorOnPrimary"
             app:layout_constraintStart_toEndOf="@id/onboardingSecondRestoreBtn"

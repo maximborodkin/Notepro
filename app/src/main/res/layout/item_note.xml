@@ -24,7 +24,7 @@
             android:layout_height="48dp"
             android:padding="12dp"
             android:src="@drawable/ic_restore"
-            android:tint="@color/restore_blue"
+            android:tint="?colorControlNormal"
             android:visibility="@{note.deleted ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

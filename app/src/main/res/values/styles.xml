@@ -13,7 +13,6 @@
     </style>
 
     <style name="AlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
-        <item name="colorSurface">@color/grey_light</item>
         <item name="materialAlertDialogTitleTextStyle">@style/AlertDialog.Title</item>
         <item name="buttonBarPositiveButtonStyle">@style/AlertDialog.Button</item>
         <item name="buttonBarNegativeButtonStyle">@style/AlertDialog.Button</item>
@@ -26,17 +25,12 @@
     </style>
 
     <style name="AlertDialog.Title" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">?colorOnSurface</item>
         <item name="android:textSize">24sp</item>
     </style>
 
     <style name="AlertDialog.Button" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textColor">#6750A4</item>
-        <item name="rippleColor">#6750A4</item>
-    </style>
-
-    <style name="Chip.Choice" parent="Widget.MaterialComponents.Chip.Choice">
-        <item name="colorOnSurface">#666666</item>
+        <item name="android:textColor">?colorControlNormal</item>
     </style>
 
 </resources>
