@@ -8,7 +8,7 @@ import ru.modemastudio.notepro.model.Reminder
 interface NoteRepository {
 
     suspend fun getAllNotes(): Flow<List<Note>>
-    suspend fun create(title: String, body: String, reminder: Reminder?, category: Category?): Long
+    suspend fun create(title: String): Long
     suspend fun markAsDeleted(noteId: Long)
     suspend fun restore(noteId: Long)
     suspend fun getById(noteId: Long): Note?

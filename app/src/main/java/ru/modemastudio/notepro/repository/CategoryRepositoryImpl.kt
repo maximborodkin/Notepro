@@ -14,4 +14,16 @@ class CategoryRepositoryImpl @Inject constructor(
     override suspend fun getAllCategories(): Flow<List<Category>> = withContext(IO) {
         categoryDao.getAllCategories()
     }
+
+    override suspend fun create(name: String) {
+        categoryDao.insert(Category(0, name))
+    }
+
+    override suspend fun update(category: Category) {
+        categoryDao.insert(category)
+    }
+
+    override suspend fun delete(category: Category) {
+        categoryDao.delete(category)
+    }
 }

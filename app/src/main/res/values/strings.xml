@@ -6,18 +6,7 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 
-<!--  NotesListFragment  -->
-    <string name="add_note">Add note</string>
-    <string name="note_moved_to_trash">Note moved to trash</string>
-    <string name="undo">Undo</string>
-    <string name="show_deleted">Show deleted</string>
-    <string name="settings">Settings</string>
-    <string name="search">Search</string>
-    <string name="note_title">Note title</string>
-    <string name="empty_note">Empty note</string>
-    <string name="empty_list_message">There is no one note in this list. Disable filters or make a new one</string>
-
-    <!--  Preferences  -->
+<!--  Preferences  -->
     <string name="enable_autodelete_key">enable_autodelete</string>
     <string name="enable_autodelete">Enable autodelete</string>
     <string name="enable_autodelete_summary">Enable or disable deletion of notes after the established timeout</string>
@@ -71,9 +60,23 @@
     <string name="bold">Bold</string>
     <string name="italic">Italic</string>
     <string name="onboarding_third_description">Use shortcut buttons on the editor screen</string>
+
+<!--  NotesListFragment  -->
+    <string name="add_note">Add note</string>
+    <string name="note_moved_to_trash">Note moved to trash</string>
+    <string name="undo">Undo</string>
+    <string name="show_deleted">Show deleted</string>
+    <string name="settings">Settings</string>
+    <string name="search">Search</string>
+    <string name="note_title">Note title</string>
+    <string name="empty_note">Empty note</string>
+    <string name="empty_list_message">There is no one note in this list. Disable filters or make a new one</string>
     <string name="too_long_title">Too long title</string>
     <string name="title_is_required">Title is required</string>
     <string name="delete_note">Delete note?</string>
     <string name="It_cant_be_undone">It can\'t be undone</string>
-
+    <string name="create_category">Create category</string>
+    <string name="plus_symbol" translatable="false">+</string>
+    <string name="delete">Delete</string>
+    <string name="rename_category">Rename category</string>
 </resources>

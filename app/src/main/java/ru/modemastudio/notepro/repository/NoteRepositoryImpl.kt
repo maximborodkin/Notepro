@@ -8,6 +8,7 @@ import ru.modemastudio.notepro.model.Note
 import ru.modemastudio.notepro.model.Reminder
 import ru.modemastudio.notepro.persistence.PreferencesManager
 import ru.modemastudio.notepro.persistence.database.dao.NoteDao
+import ru.modemastudio.notepro.util.dateTimeString
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
@@ -24,42 +25,44 @@ class NoteRepositoryImpl @Inject constructor(
             .onCompletion { deleteExpiredNotes() }
     }
 
-    private suspend fun deleteExpiredNotes() {
-        if (!preferencesManager.isAutodeleteEnabled) return
-        val autodeleteTime = preferencesManager.autodeleteTimeout
-        noteDao.getAllNotes().collect { notes ->
-            notes.forEach { note ->
-                if (Date().time - note.updatedAt.time > autodeleteTime) {
-                    Timber.tag("EXPIRED_DELETION").i("""Note ${note.noteId}(${note.title}) was
-                            deleted cause expiration. lastUpdate:${note.updatedAt.time},
-                            expirationTime:${autodeleteTime}, now:${Date().time}""")
-                    noteDao.delete(note)
+    private suspend fun deleteExpiredNotes() = withContext(IO) {
+        if (preferencesManager.isAutodeleteEnabled){
+            val autodeleteTime = preferencesManager.autodeleteTimeout
+            noteDao.getAllNotes().collect { notes ->
+                notes.forEach { note ->
+                    if (Date().time - note.updatedAt.time > autodeleteTime) {
+                        Timber.tag("EXPIRED_DELETION").i("""Note ${note.noteId}(${note.title}) was
+                                deleted cause expiration. lastUpdate:${note.updatedAt.time},
+                                expirationTime:${autodeleteTime}, now:${Date().time}""")
+                        noteDao.delete(note)
+                    }
                 }
             }
         }
     }
 
     override suspend fun create(
-        title: String,
-        body: String,
-        reminder: Reminder?,
-        category: Category?
+        title: String
     ): Long = withContext(IO) {
         val note = Note(
             noteId = 0,
             title = title,
-            body = body,
+            body = String(),
             updatedAt = Date(),
             isDeleted = false,
-            reminder = reminder,
-            category = category
+            reminder = null,
+            category = null
         )
         save(note)
     }
 
-    override suspend fun save(note: Note): Long = noteDao.insert(note)
+    override suspend fun save(note: Note): Long = withContext(IO) {
+        noteDao.insert(note)
+    }
 
-    override suspend fun delete(note: Note) = noteDao.delete(note)
+    override suspend fun delete(note: Note) = withContext(IO) {
+        noteDao.delete(note)
+    }
 
     override suspend fun markAsDeleted(noteId: Long) = withContext(IO) {
         noteDao.markAsDeleted(noteId)
@@ -69,5 +72,7 @@ class NoteRepositoryImpl @Inject constructor(
         noteDao.restore(noteId)
     }
 
-    override suspend fun getById(noteId: Long): Note? = noteDao.getById(noteId).firstOrNull()
+    override suspend fun getById(noteId: Long): Note? = withContext(IO) {
+        noteDao.getById(noteId).firstOrNull()
+    }
 }

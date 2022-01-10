@@ -10,21 +10,21 @@ import ru.modemastudio.notepro.R
 import ru.modemastudio.notepro.databinding.AlertdialogEdittextBinding
 
 
-class NoteTitleDialog(
+class EditTextDialog(
     context: Context,
-    title: String?,
+    title: String,
+    text: String? = null,
     onPositiveButtonClicked: (title: String) -> Unit
 ) : MaterialAlertDialogBuilder(context) {
 
     init {
-        val dialogTitle = if (title.isNullOrBlank()) R.string.create_note else R.string.rename_note
-        setTitle(context.getString(dialogTitle))
+        setTitle(title)
 
         val customView = AlertdialogEdittextBinding.inflate(LayoutInflater.from(context))
         setView(customView.root)
 
         with(customView.alertDialogEditText) {
-            setText(title)
+            setText(text)
             setSelection(length())
             requestFocus()
             addTextChangedListener { customView.alertDialogEditTextLayout.error = null }
@@ -38,13 +38,13 @@ class NoteTitleDialog(
         dialog.show()
 
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-            val newTitle = customView.alertDialogEditText.text.toString()
-            if (newTitle.isNotBlank()) {
-                if (newTitle.length > 30) {
+            val newText = customView.alertDialogEditText.text.toString()
+            if (newText.isNotBlank()) {
+                if (newText.length > 30) {
                     customView.alertDialogEditTextLayout.error =
                         context.getString(R.string.too_long_title)
                 } else {
-                    onPositiveButtonClicked(newTitle)
+                    onPositiveButtonClicked(newText)
                     dialog.dismiss()
                 }
             } else {

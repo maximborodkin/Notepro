@@ -12,10 +12,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle.State.STARTED
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import ru.modemastudio.notepro.R
@@ -24,9 +26,9 @@ import ru.modemastudio.notepro.model.Category
 import ru.modemastudio.notepro.model.Note
 import ru.modemastudio.notepro.util.appComponent
 import ru.modemastudio.notepro.util.autoCleared
-import timber.log.Timber
 import javax.inject.Inject
 
+@FlowPreview
 class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
     @Inject
     lateinit var model: NotesListViewModel
@@ -52,7 +54,7 @@ class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
         return when (item.itemId) {
             R.id.notesListSearchView -> true
             R.id.notesListShowDeleted -> {
-                viewLifecycleOwner.lifecycleScope.launch {
+                model.viewModelScope.launch {
                     model.isDeletedShown.emit(!model.isDeletedShown.value)
                 }
                 activity?.invalidateOptionsMenu() // Redraw menu to show different delete icon
@@ -79,7 +81,7 @@ class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
                 override fun onQueryTextSubmit(query: String?): Boolean = true
 
                 override fun onQueryTextChange(newText: String?): Boolean {
-                    viewLifecycleOwner.lifecycleScope.launch {
+                    model.viewModelScope.launch {
                         model.searchQuery.emit(newText)
                     }
                     return true
@@ -99,19 +101,24 @@ class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
                 findNavController().navigate(action)
             },
             onItemLongClick = { note ->
-                NoteTitleDialog(requireContext(), note.title) { title ->
-                    model.update(note.copy(title = title))
-                }
+                EditTextDialog(
+                    context = requireContext(),
+                    title = getString(R.string.rename_note),
+                    text = note.title,
+                    onPositiveButtonClicked = { title ->
+                        model.updateNote(note.copy(title = title))
+                    }
+                )
             },
             onItemDismiss = { noteId ->
-                model.markAsDeleted(noteId)
+                model.markNoteAsDeleted(noteId)
                 Snackbar.make(
                     view,
                     getString(R.string.note_moved_to_trash),
                     Snackbar.LENGTH_LONG
                 ).apply {
                     setAction(R.string.undo) {
-                        model.restore(noteId)
+                        model.restoreNote(noteId)
                     }
                     show()
                 }
@@ -121,10 +128,11 @@ class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
                     setTitle(getString(R.string.delete_note))
                     setMessage(getString(R.string.It_cant_be_undone))
                     setPositiveButton(getString(R.string.ok)) { dialog, _ ->
-                        model.delete(note)
+                        model.deleteNote(note)
                         dialog.dismiss()
                     }
                     setNegativeButton(R.string.cancel) { dialog, _ ->
+                        // Redraw swiped item to restore item view
                         recyclerAdapter.notifyItemChanged(adapterPosition)
                         dialog.dismiss()
                     }
@@ -132,20 +140,23 @@ class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
                 }
             },
             onItemRestore = { noteId ->
-                model.restore(noteId)
+                model.restoreNote(noteId)
             }
         )
 
         with(binding) {
             notesListAddBtn.setOnClickListener {
-                NoteTitleDialog(requireContext(), null) { title ->
-                    viewLifecycleOwner.lifecycleScope.launch {
-                        val noteId = model.create(title)
-                        val action =
-                            NotesListFragmentDirections.actionNotesListToNoteDetails(noteId)
-                        findNavController().navigate(action)
-                    }
-                }
+                EditTextDialog(
+                    context = requireContext(),
+                    title = getString(R.string.create_note),
+                    onPositiveButtonClicked = { title ->
+                        model.viewModelScope.launch {
+                            val noteId = model.createNote(title)
+                            val action =
+                                NotesListFragmentDirections.actionNotesListToNoteDetails(noteId)
+                            findNavController().navigate(action)
+                        }
+                    })
             }
             lifecycleOwner = viewLifecycleOwner
             notesListRecycler.adapter = recyclerAdapter
@@ -162,39 +173,67 @@ class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(STARTED) {
-                val scope = this
                 model.getAllCategories().collect { categoriesList: List<Category> ->
-                    binding.notesListFilterChipsLayout.removeAllViews()
-
-                    categoriesList.forEach { category: Category ->
-
-                        Chip(requireContext()).apply {
-                            id = View.generateViewId()
-                            tag = this.hashCode()
-                            text = category.name
-                            isCheckable = true
-                            isCheckedIconVisible = false
-                            chipBackgroundColor =
-                                ContextCompat.getColorStateList(
-                                    requireContext(),
-                                    R.color.chip_color_selector
-                                )
-
-                            isChecked = category in model.selectedCategories.value
-                            setOnCheckedChangeListener { _, isChecked ->
-
-                                val newCategories = model.selectedCategories.value.apply {
-                                    if (isChecked) add(category) else remove(category)
-                                }
-                                Timber.tag("NOTES_FILTER").d("selectedCategories: $newCategories")
-                                model.updateCategories(newCategories)
-                            }
-
-                            binding.notesListFilterChipsLayout.addView(this)
-                        }
-                    }
+                    createFilterChips(categoriesList)
                 }
             }
         }
+    }
+
+    private fun createFilterChips(categories: List<Category>) {
+        binding.notesListFilterChipsLayout.removeAllViews()
+        categories.forEach { category: Category ->
+
+            Chip(requireContext()).apply {
+                text = category.name
+                isCheckable = true
+                isCheckedIconVisible = false
+                chipBackgroundColor =
+                    ContextCompat.getColorStateList(requireContext(), R.color.chip_color_selector)
+
+                isChecked = category in model.selectedCategories.value
+                setOnCheckedChangeListener { _, isChecked ->
+                    val newCategories = hashSetOf<Category>().apply {
+                        addAll(model.selectedCategories.value)
+                        if (isChecked) add(category) else remove(category)
+                    }
+                    model.viewModelScope.launch {
+                        model.selectedCategories.emit(newCategories)
+                    }
+                }
+
+                setOnLongClickListener {
+                    CategoryMenuFragment(
+                        category = category,
+                        onEdit = { editedCategory ->
+                            model.updateCategory(editedCategory)
+                        },
+                        onDelete = { deletedCategory ->
+                            model.deleteCategory(deletedCategory)
+                        }
+                    ).show(childFragmentManager, "CategoryMenuFragment")
+                    true
+                }
+
+                binding.notesListFilterChipsLayout.addView(this)
+            }
+        }
+
+        val createCategoryChip = Chip(requireContext()).apply {
+            text = getString(R.string.plus_symbol)
+            isCheckable = false
+            isChecked = false
+            isCheckedIconVisible = false
+            setOnClickListener {
+                EditTextDialog(
+                    context = requireContext(),
+                    title = getString(R.string.create_category),
+                    onPositiveButtonClicked = { name ->
+                        model.createCategory(name)
+                    }
+                )
+            }
+        }
+        binding.notesListFilterChipsLayout.addView(createCategoryChip)
     }
 }
