@@ -26,14 +26,6 @@ class NotesListViewModel(
     val searchQuery = MutableStateFlow<String?>(null)
     val selectedCategories = MutableStateFlow(hashSetOf<Category>())
 
-    init {
-        viewModelScope.launch {
-            selectedCategories.collect {
-                Timber.tag("filter").d(selectedCategories.value.toString())
-            }
-        }
-    }
-
     @FlowPreview
     suspend fun getAllNotes(): Flow<List<Note>> =
         notesRepository.getAllNotes()

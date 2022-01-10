@@ -11,6 +11,9 @@ import android.widget.Button
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import io.noties.markwon.Markwon
@@ -27,8 +30,11 @@ import io.noties.markwon.image.data.DataUriSchemeHandler
 import io.noties.markwon.image.svg.SvgMediaDecoder
 import io.noties.markwon.linkify.LinkifyPlugin
 import io.noties.markwon.movement.MovementMethodPlugin
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import ru.modemastudio.notepro.R
 import ru.modemastudio.notepro.databinding.FragmentNoteDetailsBinding
+import ru.modemastudio.notepro.model.Feature
 import ru.modemastudio.notepro.util.addViews
 import ru.modemastudio.notepro.util.appComponent
 import javax.inject.Inject
@@ -81,43 +87,48 @@ class NoteDetailsFragment : Fragment(R.layout.fragment_note_details) {
                 // Redraw menu to show different edit icon if isEditorVisible was changed from ViewModel
                 activity?.invalidateOptionsMenu()
             }
-            val featureButtons = arrayListOf<Button>()
-            model.features.observe(viewLifecycleOwner) {
-                it.forEach { feature ->
-                    val button = Button(requireContext()).apply {
-                        text = feature.name.trim()
-                        setOnClickListener {
-                            // get current cursor position
-                            val start = noteDetailsBottom.selectionStart.coerceAtLeast(0)
-                            val end = noteDetailsBottom.selectionEnd.coerceAtLeast(0)
 
-                            // place a tag
-                            noteDetailsBottom.text?.replace(
-                                start.coerceAtMost(end),
-                                start.coerceAtLeast(end),
-                                feature.tag
-                            )
-
-                            // set cursor to new position (depends of a feature)
-                            val selectionStart = noteDetailsBottom.selectionStart -
-                                    (feature.tag.length - feature.cursorOffset)
-                            noteDetailsBottom.setSelection(
-                                selectionStart,
-                                selectionStart
-                            )
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    model.getEnabledFeatures().collect { features ->
+                        features.forEach { feature ->
+                            noteDetailsFeaturesLayout.addView(createFeatureButton(feature))
                         }
                     }
-                    featureButtons.add(button)
                 }
-                noteDetailsFeaturesLayout.addViews(featureButtons)
             }
+
         }
         initMarkwon()
     }
 
     override fun onPause() {
         super.onPause()
-        model.save()
+        model.saveNote()
+    }
+
+    private fun createFeatureButton(feature: Feature) = Button(requireContext()).apply {
+        text = feature.name.trim()
+        setOnClickListener {
+            // get current cursor position
+            val start = binding.noteDetailsBottom.selectionStart.coerceAtLeast(0)
+            val end = binding.noteDetailsBottom.selectionEnd.coerceAtLeast(0)
+
+            // place a tag
+            binding.noteDetailsBottom.text?.replace(
+                start.coerceAtMost(end),
+                start.coerceAtLeast(end),
+                feature.tag
+            )
+
+            // set cursor to new position (depends of a feature)
+            val selectionStart = binding.noteDetailsBottom.selectionStart -
+                    (feature.tag.length - feature.cursorOffset)
+            binding.noteDetailsBottom.setSelection(
+                selectionStart,
+                selectionStart
+            )
+        }
     }
 
     private fun initMarkwon() {

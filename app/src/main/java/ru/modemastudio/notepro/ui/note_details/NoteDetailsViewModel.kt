@@ -5,10 +5,12 @@ import androidx.lifecycle.*
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import ru.modemastudio.notepro.model.Category
 import ru.modemastudio.notepro.model.Feature
 import ru.modemastudio.notepro.model.Note
+import ru.modemastudio.notepro.repository.CategoryRepository
 import ru.modemastudio.notepro.repository.FeatureRepository
 import ru.modemastudio.notepro.repository.NoteRepository
 import javax.inject.Inject
@@ -17,37 +19,38 @@ class NoteDetailsViewModel @Inject constructor(
     application: Application,
     private val noteRepository: NoteRepository,
     private val featureRepository: FeatureRepository,
+    private val categoryRepository: CategoryRepository,
     private val noteId: Long
 ) : AndroidViewModel(application) {
 
     private val _note = MutableLiveData<Note>()
     val note: LiveData<Note> = _note
 
-    private val _features = MutableLiveData<List<Feature>>()
-    val features: LiveData<List<Feature>> = _features
-
     val isEditorVisible = MutableLiveData(false)
 
     init {
         viewModelScope.launch {
-            noteRepository.getById(noteId)?.let { note ->
-                _note.postValue(note)
-                isEditorVisible.postValue(note.body.isBlank())
+            val note = noteRepository.getById(noteId).first()
+            note?.let {
+                _note.postValue(it)
+                isEditorVisible.postValue(it.body.isBlank())
             }
-            _features.postValue(featureRepository.getEnabled().first())
         }
     }
 
-    fun save() {
-        viewModelScope.launch {
-            _note.value?.let { noteRepository.save(it) }
-        }
+    fun saveNote() = viewModelScope.launch {
+        _note.value?.let { noteRepository.save(it) }
     }
+
+    suspend fun getEnabledFeatures() = featureRepository.getEnabled()
+
+    suspend fun getAllCategories() = categoryRepository.getAllCategories()
 
     class NoteDetailsViewModelFactory @AssistedInject constructor(
         private val application: Application,
         private val noteRepository: NoteRepository,
         private val featureRepository: FeatureRepository,
+        private val categoryRepository: CategoryRepository,
         @Assisted("noteId") private val noteId: Long
     ) : ViewModelProvider.AndroidViewModelFactory(application) {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -57,6 +60,7 @@ class NoteDetailsViewModel @Inject constructor(
                     application,
                     noteRepository,
                     featureRepository,
+                    categoryRepository,
                     noteId
                 ) as T
             }

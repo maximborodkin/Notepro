@@ -72,7 +72,7 @@ class NoteRepositoryImpl @Inject constructor(
         noteDao.restore(noteId)
     }
 
-    override suspend fun getById(noteId: Long): Note? = withContext(IO) {
-        noteDao.getById(noteId).firstOrNull()
+    override suspend fun getById(noteId: Long) = withContext(IO) {
+        noteDao.getById(noteId)
     }
 }

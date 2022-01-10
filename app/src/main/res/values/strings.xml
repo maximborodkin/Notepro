@@ -59,7 +59,7 @@
     <string name="h1">H1</string>
     <string name="bold">Bold</string>
     <string name="italic">Italic</string>
-    <string name="onboarding_third_description">Use shortcut buttons on the editor screen</string>
+    <string name="onboarding_third_description">Use shortcut buttons on the editor screen. All your work is autosaved</string>
 
 <!--  NotesListFragment  -->
     <string name="add_note">Add note</string>
