@@ -9,11 +9,7 @@ import ru.modemastudio.notepro.R
 import ru.modemastudio.notepro.databinding.FragmentBottomCategoryMenuBinding
 import ru.modemastudio.notepro.model.Category
 
-class CategoryMenuFragment(
-    private val category: Category,
-    private val onEdit: (category: Category) -> Unit,
-    private val onDelete: (category: Category) -> Unit
-) : BottomSheetDialogFragment() {
+class CategoryMenuFragment : BottomSheetDialogFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,5 +36,22 @@ class CategoryMenuFragment(
         }
 
         return binding.root
+    }
+
+    companion object {
+        private lateinit var category: Category
+        private lateinit var onEdit: (category: Category) -> Unit
+        private lateinit var onDelete: (category: Category) -> Unit
+
+        fun newInstance(
+            category: Category,
+            onEdit: (category: Category) -> Unit,
+            onDelete: (category: Category) -> Unit
+        ): CategoryMenuFragment {
+            this.category = category
+            this.onEdit = onEdit
+            this.onDelete = onDelete
+            return CategoryMenuFragment()
+        }
     }
 }

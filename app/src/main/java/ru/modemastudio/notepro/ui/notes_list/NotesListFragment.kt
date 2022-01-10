@@ -203,7 +203,7 @@ class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
                 }
 
                 setOnLongClickListener {
-                    CategoryMenuFragment(
+                    CategoryMenuFragment.newInstance(
                         category = category,
                         onEdit = { editedCategory ->
                             model.updateCategory(editedCategory)
