@@ -12,6 +12,7 @@ import ru.modemastudio.notepro.model.Category
 import ru.modemastudio.notepro.model.Note
 import ru.modemastudio.notepro.repository.CategoryRepository
 import ru.modemastudio.notepro.repository.NoteRepository
+import ru.modemastudio.notepro.ui.common.CategoryActions
 import ru.modemastudio.notepro.util.dateTimeString
 import ru.modemastudio.notepro.util.like
 import timber.log.Timber
@@ -20,7 +21,7 @@ class NotesListViewModel(
     application: Application,
     private val notesRepository: NoteRepository,
     private val categoryRepository: CategoryRepository
-) : AndroidViewModel(application) {
+) : AndroidViewModel(application), CategoryActions {
 
     val isDeletedShown = MutableStateFlow(false)
     val searchQuery = MutableStateFlow<String?>(null)
@@ -70,16 +71,25 @@ class NotesListViewModel(
     suspend fun getAllCategories(): Flow<List<Category>> =
         categoryRepository.getAllCategories()
 
-    fun createCategory(name: String) = viewModelScope.launch {
-        categoryRepository.create(name)
+    override fun createCategory(name: String) {
+
+        viewModelScope.launch {
+            categoryRepository.create(name)
+        }
     }
 
-    fun updateCategory(category: Category) = viewModelScope.launch {
-        categoryRepository.update(category)
+    override fun updateCategory(category: Category) {
+
+        viewModelScope.launch {
+            categoryRepository.update(category)
+        }
     }
 
-    fun deleteCategory(category: Category) = viewModelScope.launch {
-        categoryRepository.delete(category)
+    override fun deleteCategory(category: Category) {
+
+        viewModelScope.launch {
+            categoryRepository.delete(category)
+        }
     }
 
     class NotesListViewModelFactory(

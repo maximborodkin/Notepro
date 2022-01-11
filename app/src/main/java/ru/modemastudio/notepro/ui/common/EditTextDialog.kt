@@ -1,4 +1,4 @@
-package ru.modemastudio.notepro.ui.notes_list
+package ru.modemastudio.notepro.ui.common
 
 import android.content.Context
 import android.view.LayoutInflater

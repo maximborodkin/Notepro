@@ -5,14 +5,15 @@ import androidx.lifecycle.*
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import ru.modemastudio.notepro.model.Category
-import ru.modemastudio.notepro.model.Feature
 import ru.modemastudio.notepro.model.Note
 import ru.modemastudio.notepro.repository.CategoryRepository
 import ru.modemastudio.notepro.repository.FeatureRepository
 import ru.modemastudio.notepro.repository.NoteRepository
+import ru.modemastudio.notepro.ui.common.CategoryActions
 import javax.inject.Inject
 
 class NoteDetailsViewModel @Inject constructor(
@@ -21,7 +22,7 @@ class NoteDetailsViewModel @Inject constructor(
     private val featureRepository: FeatureRepository,
     private val categoryRepository: CategoryRepository,
     private val noteId: Long
-) : AndroidViewModel(application) {
+) : AndroidViewModel(application), CategoryActions {
 
     private val _note = MutableLiveData<Note>()
     val note: LiveData<Note> = _note
@@ -44,7 +45,28 @@ class NoteDetailsViewModel @Inject constructor(
 
     suspend fun getEnabledFeatures() = featureRepository.getEnabled()
 
-    suspend fun getAllCategories() = categoryRepository.getAllCategories()
+    suspend fun getAllCategories(): Flow<List<Category>> =
+        categoryRepository.getAllCategories()
+
+    override fun createCategory(name: String) {
+
+        viewModelScope.launch {
+            categoryRepository.create(name)
+        }
+    }
+
+    override fun updateCategory(category: Category) {
+
+        viewModelScope.launch {
+            categoryRepository.update(category)
+        }
+    }
+
+    override fun deleteCategory(category: Category) {
+        viewModelScope.launch {
+            categoryRepository.delete(category)
+        }
+    }
 
     class NoteDetailsViewModelFactory @AssistedInject constructor(
         private val application: Application,

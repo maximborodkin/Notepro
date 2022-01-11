@@ -23,10 +23,10 @@ data class Note(
     var isDeleted: Boolean = false,
 
     @Embedded(prefix = "reminder_")
-    val reminder: Reminder? = null,
+    var reminder: Reminder? = null,
 
     @Embedded(prefix = "category_")
-    val category: Category? = null
+    var category: Category? = null
 ) {
     companion object Contract {
         const val tableName = "notes"

@@ -24,6 +24,9 @@ import ru.modemastudio.notepro.R
 import ru.modemastudio.notepro.databinding.FragmentNotesListBinding
 import ru.modemastudio.notepro.model.Category
 import ru.modemastudio.notepro.model.Note
+import ru.modemastudio.notepro.ui.common.CategoryChipsFactory
+import ru.modemastudio.notepro.ui.common.CategoryMenuFragment
+import ru.modemastudio.notepro.ui.common.EditTextDialog
 import ru.modemastudio.notepro.util.appComponent
 import ru.modemastudio.notepro.util.autoCleared
 import javax.inject.Inject
@@ -174,66 +177,25 @@ class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(STARTED) {
                 model.getAllCategories().collect { categoriesList: List<Category> ->
-                    createFilterChips(categoriesList)
-                }
-            }
-        }
-    }
-
-    private fun createFilterChips(categories: List<Category>) {
-        binding.notesListFilterChipsLayout.removeAllViews()
-        categories.forEach { category: Category ->
-
-            Chip(requireContext()).apply {
-                text = category.name
-                isCheckable = true
-                isCheckedIconVisible = false
-                chipBackgroundColor =
-                    ContextCompat.getColorStateList(requireContext(), R.color.chip_color_selector)
-
-                isChecked = category in model.selectedCategories.value
-                setOnCheckedChangeListener { _, isChecked ->
-                    val newCategories = hashSetOf<Category>().apply {
-                        addAll(model.selectedCategories.value)
-                        if (isChecked) add(category) else remove(category)
-                    }
-                    model.viewModelScope.launch {
-                        model.selectedCategories.emit(newCategories)
-                    }
-                }
-
-                setOnLongClickListener {
-                    CategoryMenuFragment.newInstance(
-                        category = category,
-                        onEdit = { editedCategory ->
-                            model.updateCategory(editedCategory)
+                    CategoryChipsFactory.createCategoryChips(
+                        categories = categoriesList,
+                        fragmentManager = childFragmentManager,
+                        chipGroup = binding.notesListFilterChipsLayout,
+                        isSingleSelection = false,
+                        onCheckedChangeListener = { category, isChecked ->
+                            val newCategories = hashSetOf<Category>().apply {
+                                addAll(model.selectedCategories.value)
+                                if (isChecked) add(category) else remove(category)
+                            }
+                            model.viewModelScope.launch {
+                                model.selectedCategories.emit(newCategories)
+                            }
                         },
-                        onDelete = { deletedCategory ->
-                            model.deleteCategory(deletedCategory)
-                        }
-                    ).show(childFragmentManager, "CategoryMenuFragment")
-                    true
+                        isChecked = { category -> category in model.selectedCategories.value },
+                        categoryActions = model
+                    )
                 }
-
-                binding.notesListFilterChipsLayout.addView(this)
             }
         }
-
-        val createCategoryChip = Chip(requireContext()).apply {
-            text = getString(R.string.plus_symbol)
-            isCheckable = false
-            isChecked = false
-            isCheckedIconVisible = false
-            setOnClickListener {
-                EditTextDialog(
-                    context = requireContext(),
-                    title = getString(R.string.create_category),
-                    onPositiveButtonClicked = { name ->
-                        model.createCategory(name)
-                    }
-                )
-            }
-        }
-        binding.notesListFilterChipsLayout.addView(createCategoryChip)
     }
 }

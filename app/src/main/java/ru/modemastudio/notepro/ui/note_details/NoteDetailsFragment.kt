@@ -7,7 +7,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.chip.Chip
 import io.noties.markwon.Markwon
 import io.noties.markwon.editor.MarkwonEditor
 import io.noties.markwon.editor.MarkwonEditorTextWatcher
@@ -35,7 +35,7 @@ import kotlinx.coroutines.launch
 import ru.modemastudio.notepro.R
 import ru.modemastudio.notepro.databinding.FragmentNoteDetailsBinding
 import ru.modemastudio.notepro.model.Feature
-import ru.modemastudio.notepro.util.addViews
+import ru.modemastudio.notepro.ui.common.CategoryChipsFactory
 import ru.modemastudio.notepro.util.appComponent
 import javax.inject.Inject
 
@@ -82,6 +82,7 @@ class NoteDetailsFragment : Fragment(R.layout.fragment_note_details) {
             viewModel = model
             model.note.observe(viewLifecycleOwner) {
                 activity?.title = it.title
+                initCategoriesChips()
             }
             model.isEditorVisible.observe(viewLifecycleOwner) {
                 // Redraw menu to show different edit icon if isEditorVisible was changed from ViewModel
@@ -91,12 +92,14 @@ class NoteDetailsFragment : Fragment(R.layout.fragment_note_details) {
             viewLifecycleOwner.lifecycleScope.launch {
                 viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                     model.getEnabledFeatures().collect { features ->
+                        noteDetailsFeaturesChipsGroup.removeAllViews()
                         features.forEach { feature ->
-                            noteDetailsFeaturesLayout.addView(createFeatureButton(feature))
+                            noteDetailsFeaturesChipsGroup.addView(createFeatureChip(feature))
                         }
                     }
                 }
             }
+
 
         }
         initMarkwon()
@@ -107,8 +110,9 @@ class NoteDetailsFragment : Fragment(R.layout.fragment_note_details) {
         model.saveNote()
     }
 
-    private fun createFeatureButton(feature: Feature) = Button(requireContext()).apply {
+    private fun createFeatureChip(feature: Feature) = Chip(requireContext()).apply {
         text = feature.name.trim()
+        isCheckable = false
         setOnClickListener {
             // get current cursor position
             val start = binding.noteDetailsBottom.selectionStart.coerceAtLeast(0)
@@ -130,6 +134,34 @@ class NoteDetailsFragment : Fragment(R.layout.fragment_note_details) {
             )
         }
     }
+
+    private fun initCategoriesChips() {
+        binding.noteDetailsCategoriesChipsGroup.isSingleSelection = true
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                model.getAllCategories().collect { categories ->
+                    CategoryChipsFactory.createCategoryChips(
+                        categories = categories,
+                        fragmentManager = childFragmentManager,
+                        chipGroup = binding.noteDetailsCategoriesChipsGroup,
+                        isSingleSelection = true,
+                        onCheckedChangeListener = { category, isChecked ->
+                            if (isChecked) {
+                                model.note.value?.category = category
+                            } else {
+                                if (model.note.value?.category == category) {
+                                    model.note.value?.category = null
+                                }
+                            }
+                        },
+                        isChecked = { category -> model.note.value?.category == category },
+                        categoryActions = model
+                    )
+                }
+            }
+        }
+    }
+
 
     private fun initMarkwon() {
         val context = requireContext()

@@ -1,7 +1,9 @@
 package ru.modemastudio.notepro.repository
 
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.withContext
 import ru.modemastudio.notepro.model.Feature
 import ru.modemastudio.notepro.persistence.database.dao.FeatureDao
 import javax.inject.Inject
@@ -11,13 +13,11 @@ class FeatureRepositoryImpl @Inject constructor(
 ) : FeatureRepository {
 
     override suspend fun getAll(): Flow<List<Feature>> {
-        if (featureDao.getAll().first().isEmpty()) {
-            initialFill()
-        }
         return featureDao.getAll()
     }
 
     override suspend fun getEnabled(): Flow<List<Feature>> {
+        if (featureDao.getEnabled().firstOrNull().isNullOrEmpty()) initialFill()
         return featureDao.getEnabled()
     }
 
@@ -29,7 +29,7 @@ class FeatureRepositoryImpl @Inject constructor(
         featureDao.disableFeature(featureId)
     }
 
-    private suspend fun initialFill() {
+    private suspend fun initialFill() = withContext(IO) {
         val features = listOf(
             Feature.H1,
             Feature.H2,

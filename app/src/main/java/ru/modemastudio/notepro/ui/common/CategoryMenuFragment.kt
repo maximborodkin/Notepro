@@ -1,4 +1,4 @@
-package ru.modemastudio.notepro.ui.notes_list
+package ru.modemastudio.notepro.ui.common
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -48,9 +48,9 @@ class CategoryMenuFragment : BottomSheetDialogFragment() {
             onEdit: (category: Category) -> Unit,
             onDelete: (category: Category) -> Unit
         ): CategoryMenuFragment {
-            this.category = category
-            this.onEdit = onEdit
-            this.onDelete = onDelete
+            Companion.category = category
+            Companion.onEdit = onEdit
+            Companion.onDelete = onDelete
             return CategoryMenuFragment()
         }
     }
