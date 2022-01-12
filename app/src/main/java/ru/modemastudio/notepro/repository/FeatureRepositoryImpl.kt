@@ -36,7 +36,14 @@ class FeatureRepositoryImpl @Inject constructor(
             Feature.H3,
             Feature.H4,
             Feature.H5,
-            Feature.H6
+            Feature.H6,
+            Feature.bold,
+            Feature.italic,
+            Feature.listItem,
+            Feature.checkbox,
+            Feature.underline,
+            Feature.strikethrough,
+            Feature.table
         )
         featureDao.insert(features)
     }

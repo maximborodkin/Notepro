@@ -68,7 +68,7 @@ class NoteDetailsFragment : Fragment(R.layout.fragment_note_details) {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (item.itemId == R.id.noteDetailsEdit) {
-            // show/hide note editor
+            // Show/hide note editor
             model.isEditorVisible.postValue(model.isEditorVisible.value?.not())
             activity?.invalidateOptionsMenu() // Redraw menu to show different edit icon
             true
@@ -114,21 +114,21 @@ class NoteDetailsFragment : Fragment(R.layout.fragment_note_details) {
         text = feature.name.trim()
         isCheckable = false
         setOnClickListener {
-            // get current cursor position
-            val start = binding.noteDetailsBottom.selectionStart.coerceAtLeast(0)
-            val end = binding.noteDetailsBottom.selectionEnd.coerceAtLeast(0)
+            // Get current cursor position
+            val start = binding.noteDetailsEditText.selectionStart.coerceAtLeast(0)
+            val end = binding.noteDetailsEditText.selectionEnd.coerceAtLeast(0)
 
-            // place a tag
-            binding.noteDetailsBottom.text?.replace(
+            // Place a tag
+            binding.noteDetailsEditText.text?.replace(
                 start.coerceAtMost(end),
                 start.coerceAtLeast(end),
                 feature.tag
             )
 
-            // set cursor to new position (depends of a feature)
-            val selectionStart = binding.noteDetailsBottom.selectionStart -
+            // Set cursor to new position (depends of a feature)
+            val selectionStart = binding.noteDetailsEditText.selectionStart -
                     (feature.tag.length - feature.cursorOffset)
-            binding.noteDetailsBottom.setSelection(
+            binding.noteDetailsEditText.setSelection(
                 selectionStart,
                 selectionStart
             )
@@ -136,14 +136,14 @@ class NoteDetailsFragment : Fragment(R.layout.fragment_note_details) {
     }
 
     private fun initCategoriesChips() {
-        binding.noteDetailsCategoriesChipsGroup.isSingleSelection = true
+        binding.noteDetailsCategoryChipsGroup.isSingleSelection = true
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 model.getAllCategories().collect { categories ->
                     CategoryChipsFactory.createCategoryChips(
                         categories = categories,
                         fragmentManager = childFragmentManager,
-                        chipGroup = binding.noteDetailsCategoriesChipsGroup,
+                        chipGroup = binding.noteDetailsCategoryChipsGroup,
                         isSingleSelection = true,
                         onCheckedChangeListener = { category, isChecked ->
                             if (isChecked) {
@@ -162,16 +162,13 @@ class NoteDetailsFragment : Fragment(R.layout.fragment_note_details) {
         }
     }
 
-
     private fun initMarkwon() {
         val context = requireContext()
 
         val tableTheme = TableTheme.buildWithDefaults(context)
-            .tableBorderColor(Color.BLACK)
-            .tableCellPadding(0)
+            .tableBorderColor(Color.WHITE)
+            .tableCellPadding(20)
             .tableHeaderRowBackgroundColor(Color.rgb(150, 150, 150)) // Light gray
-            .tableEvenRowBackgroundColor(Color.WHITE)
-            .tableOddRowBackgroundColor(Color.rgb(200, 200, 200))
             .build()
 
         val markwon: Markwon = Markwon.builder(context)
@@ -179,18 +176,16 @@ class NoteDetailsFragment : Fragment(R.layout.fragment_note_details) {
                 plugin.addSchemeHandler(DataUriSchemeHandler.create())
                 plugin.addMediaDecoder(SvgMediaDecoder.create(resources))
             })
-            .usePlugin(LinkifyPlugin.create())
             .usePlugin(HtmlPlugin.create())
             .usePlugin(TablePlugin.create(tableTheme))
-            .usePlugin(MovementMethodPlugin.create(TableAwareMovementMethod.create()))
             .usePlugin(TaskListPlugin.create(context))
             .usePlugin(StrikethroughPlugin.create())
             .build()
         val editor: MarkwonEditor = MarkwonEditor.create(markwon)
-        binding.noteDetailsBottom.addTextChangedListener(MarkwonEditorTextWatcher.withProcess(editor))
-        binding.noteDetailsBottom.addTextChangedListener {
-            binding.noteDetailsTop.text =
-                markwon.toMarkdown(binding.noteDetailsBottom.text.toString())
+        binding.noteDetailsEditText.addTextChangedListener(MarkwonEditorTextWatcher.withProcess(editor))
+        binding.noteDetailsEditText.addTextChangedListener {
+            binding.noteDetailsTextView.text =
+                markwon.toMarkdown(binding.noteDetailsEditText.text.toString())
         }
     }
 }

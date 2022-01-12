@@ -79,4 +79,7 @@
     <string name="plus_symbol" translatable="false">+</string>
     <string name="delete">Delete</string>
     <string name="rename_category">Rename category</string>
+    <string name="filter">Filter</string>
+    <string name="category">Category</string>
+    <string name="edit_note">Edit note</string>
 </resources>

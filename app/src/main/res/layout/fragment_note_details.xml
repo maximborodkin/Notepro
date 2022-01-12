@@ -14,55 +14,70 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingHorizontal="8dp">
+        android:paddingHorizontal="12dp">
+
+        <TextView
+            android:id="@+id/noteDetailsCategoryTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/category"
+            android:textColor="?colorOnPrimary"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/noteDetailsCategoryChipsGroup"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/noteDetailsCategoryChipsGroup" />
 
         <com.google.android.material.chip.ChipGroup
-            android:id="@+id/noteDetailsCategoriesChipsGroup"
-            android:layout_width="match_parent"
+            android:id="@+id/noteDetailsCategoryChipsGroup"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/noteDetailsCategoryTitle"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/noteDetailsTop"
+            android:id="@+id/noteDetailsTextView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:isScrollContainer="true"
             android:scrollbarStyle="insideInset"
             android:scrollbars="vertical"
             android:textColor="?colorOnPrimary"
-            app:layout_constraintBottom_toTopOf="@id/noteDetailsBottom"
+            app:layout_constraintBottom_toTopOf="@id/noteDetailsEditText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/noteDetailsCategoriesChipsGroup" />
+            app:layout_constraintTop_toBottomOf="@id/noteDetailsCategoryChipsGroup" />
 
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/noteDetailsBottom"
+            android:id="@+id/noteDetailsEditText"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:backgroundTint="?colorOnPrimary"
-            android:isScrollContainer="true"
-            android:text="@={viewModel.note.body}"
-            android:textColor="?colorOnPrimary"
+            android:background="@drawable/stroke_box"
+            android:gravity="top|start"
+            android:padding="6dp"
+            android:scrollbarSize="2dp"
+            android:scrollbarStyle="insideOverlay"
+            android:scrollbars="vertical"
             android:visibility="@{viewModel.isEditorVisible ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toTopOf="@id/noteDetailsFeaturesScrollView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/noteDetailsTop" />
+            app:layout_constraintTop_toBottomOf="@id/noteDetailsTextView" />
 
         <HorizontalScrollView
             android:id="@+id/noteDetailsFeaturesScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:scrollbarStyle="insideInset"
+            android:scrollbars="horizontal"
+            android:visibility="@{viewModel.isEditorVisible ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/noteDetailsBottom"
-            android:scrollbars="horizontal"
-            android:scrollbarStyle="insideInset"
-            android:visibility="@{viewModel.isEditorVisible ? View.VISIBLE : View.GONE}">
+            app:layout_constraintTop_toBottomOf="@id/noteDetailsEditText">
+
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/noteDetailsFeaturesChipsGroup"
                 android:layout_width="wrap_content"
@@ -71,7 +86,7 @@
                 android:nestedScrollingEnabled="true"
                 app:chipSpacing="6dp"
                 app:singleLine="true"
-                app:singleSelection="true"/>
+                app:singleSelection="true" />
         </HorizontalScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

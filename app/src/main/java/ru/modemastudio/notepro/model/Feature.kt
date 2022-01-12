@@ -48,39 +48,85 @@ data class Feature(
         }
 
         val H1 = Feature(
-            name = "# H1",
+            name = "H1",
             tag = "# ",
             cursorOffset = 2
         )
 
         val H2 = Feature(
-            name = "# H2",
+            name = "H2",
             tag = "## ",
             cursorOffset = 3
         )
 
         val H3 = Feature(
-            name = "# H3",
+            name = "H3",
             tag = "### ",
             cursorOffset = 4
         )
 
         val H4 = Feature(
-            name = "# H4",
+            name = "H4",
             tag = "#### ",
             cursorOffset = 5
         )
 
         val H5 = Feature(
-            name = "# H5",
+            name = "H5",
             tag = "##### ",
             cursorOffset = 6
         )
 
         val H6 = Feature(
-            name = "# H6",
+            name = "H6",
             tag = "###### ",
             cursorOffset = 7
+        )
+
+        val bold = Feature(
+            name = "bold",
+            tag = "****",
+            cursorOffset = 2
+        )
+
+        val italic = Feature(
+            name = "italic",
+            tag = "**",
+            cursorOffset = 1
+        )
+
+        val listItem = Feature(
+            name = "⚫",
+            tag = "\n+ ",
+            cursorOffset = 3
+        )
+
+        val checkbox = Feature(
+            name = "▢",
+            tag = "- [ ] ",
+            cursorOffset = 6
+        )
+
+        val underline = Feature(
+            name = "A̲",
+            tag = "<u></u>",
+            cursorOffset = 3
+        )
+
+        val strikethrough = Feature(
+            name = "ʉ",
+            tag = "~~~~",
+            cursorOffset = 2
+        )
+
+        val table = Feature(
+            name = "table",
+            tag = """
+                || 1 | 2 |
+                || - | - |
+                || a | b |
+            """.trimMargin(),
+            cursorOffset = 3
         )
     }
 }
