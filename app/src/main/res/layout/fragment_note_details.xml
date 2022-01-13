@@ -49,7 +49,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/noteDetailsCategoryChipsGroup" />
 
-
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/noteDetailsEditText"
             android:layout_width="match_parent"
@@ -60,6 +59,7 @@
             android:scrollbarSize="2dp"
             android:scrollbarStyle="insideOverlay"
             android:scrollbars="vertical"
+            android:text="@={viewModel.note.body}"
             android:visibility="@{viewModel.isEditorVisible ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toTopOf="@id/noteDetailsFeaturesScrollView"
             app:layout_constraintEnd_toEndOf="parent"

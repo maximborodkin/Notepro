@@ -13,6 +13,7 @@ import ru.modemastudio.notepro.model.Note
 import ru.modemastudio.notepro.repository.CategoryRepository
 import ru.modemastudio.notepro.repository.NoteRepository
 import ru.modemastudio.notepro.ui.common.CategoryActions
+import ru.modemastudio.notepro.util.adaptiveString
 import ru.modemastudio.notepro.util.dateTimeString
 import ru.modemastudio.notepro.util.like
 import timber.log.Timber
@@ -38,11 +39,9 @@ class NotesListViewModel(
                 if (searchQuery.isNullOrBlank()) notes
                 else notes.filter { note ->
                     note.title.like(searchQuery) ||
-                            note.body.like(searchQuery) ||
-                            note.category?.name.like(searchQuery) ||
-                            note.updatedAt.dateTimeString().like(searchQuery) ||
-                            note.reminder?.date?.dateTimeString().like(searchQuery) ||
-                            note.reminder?.priority?.name.like(searchQuery)
+                    note.updatedAt.adaptiveString().like(searchQuery) ||
+                    note.body.like(searchQuery) ||
+                    note.category?.name.like(searchQuery)
                 }
             }
             .combine(selectedCategories) { notes, selectedCategories ->

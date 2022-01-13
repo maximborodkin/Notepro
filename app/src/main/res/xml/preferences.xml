@@ -19,10 +19,4 @@
         app:entryValues="@array/autodelete_timeout_entries"
         app:defaultValue="@string/autodelete_timeout_one_year"/>
 
-    <SwitchPreferenceCompat
-        android:key="@string/dark_theme_key"
-        android:title="@string/dark_theme"
-        app:iconSpaceReserved="false"
-        app:defaultValue="false"/>
-
 </PreferenceScreen>

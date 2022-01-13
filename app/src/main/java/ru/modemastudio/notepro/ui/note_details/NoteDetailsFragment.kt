@@ -20,7 +20,6 @@ import io.noties.markwon.Markwon
 import io.noties.markwon.editor.MarkwonEditor
 import io.noties.markwon.editor.MarkwonEditorTextWatcher
 import io.noties.markwon.ext.strikethrough.StrikethroughPlugin
-import io.noties.markwon.ext.tables.TableAwareMovementMethod
 import io.noties.markwon.ext.tables.TablePlugin
 import io.noties.markwon.ext.tables.TableTheme
 import io.noties.markwon.ext.tasklist.TaskListPlugin
@@ -28,8 +27,6 @@ import io.noties.markwon.html.HtmlPlugin
 import io.noties.markwon.image.ImagesPlugin
 import io.noties.markwon.image.data.DataUriSchemeHandler
 import io.noties.markwon.image.svg.SvgMediaDecoder
-import io.noties.markwon.linkify.LinkifyPlugin
-import io.noties.markwon.movement.MovementMethodPlugin
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import ru.modemastudio.notepro.R
@@ -99,8 +96,6 @@ class NoteDetailsFragment : Fragment(R.layout.fragment_note_details) {
                     }
                 }
             }
-
-
         }
         initMarkwon()
     }
@@ -182,7 +177,11 @@ class NoteDetailsFragment : Fragment(R.layout.fragment_note_details) {
             .usePlugin(StrikethroughPlugin.create())
             .build()
         val editor: MarkwonEditor = MarkwonEditor.create(markwon)
-        binding.noteDetailsEditText.addTextChangedListener(MarkwonEditorTextWatcher.withProcess(editor))
+        binding.noteDetailsEditText.addTextChangedListener(
+            MarkwonEditorTextWatcher.withProcess(
+                editor
+            )
+        )
         binding.noteDetailsEditText.addTextChangedListener {
             binding.noteDetailsTextView.text =
                 markwon.toMarkdown(binding.noteDetailsEditText.text.toString())
