@@ -49,14 +49,15 @@ class NoteDetailsViewModel @Inject constructor(
         categoryRepository.getAllCategories()
 
     override fun createCategory(name: String) {
-
         viewModelScope.launch {
-            categoryRepository.create(name)
+            categoryRepository.create(name)?.let { category ->
+                if (_note.value?.category == null)
+                    _note.value?.category = category
+            }
         }
     }
 
     override fun updateCategory(category: Category) {
-
         viewModelScope.launch {
             categoryRepository.update(category)
         }

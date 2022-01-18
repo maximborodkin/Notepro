@@ -79,7 +79,7 @@ object CategoryChipsFactory {
                 onDelete = { deletedCategory ->
                     categoryActions.deleteCategory(deletedCategory)
                 }
-            ).show(fragmentManager, "CategoryMenuFragment")
+            ).show(fragmentManager, CategoryMenuFragment::class.simpleName)
             true
         }
     }

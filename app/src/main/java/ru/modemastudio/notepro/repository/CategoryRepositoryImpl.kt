@@ -15,15 +15,18 @@ class CategoryRepositoryImpl @Inject constructor(
         categoryDao.getAllCategories()
     }
 
-    override suspend fun create(name: String) {
-        categoryDao.insert(Category(0, name))
+    override suspend fun create(name: String): Category? = withContext(IO) {
+        val categoryId = categoryDao.insert(Category(0, name))
+        return@withContext categoryDao.getById(categoryId)
     }
 
-    override suspend fun update(category: Category) {
+
+    override suspend fun update(category: Category): Unit = withContext(IO) {
         categoryDao.insert(category)
     }
 
-    override suspend fun delete(category: Category) {
+    override suspend fun delete(category: Category): Unit = withContext(IO) {
         categoryDao.delete(category)
     }
+
 }

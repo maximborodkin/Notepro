@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.view.View" />
 
         <variable
@@ -15,26 +16,44 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/notesListFilterTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:text="@string/filter"
-            android:textColor="?colorOnPrimary"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@id/notesListFilterChipsLayout"
+        <ImageView
+            android:id="@+id/notesListFilterIcon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="12dp"
+            android:src="@drawable/ic_filter"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/notesListFilterChipsLayout" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="?colorOnPrimary" />
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/notesListFilterChipsLayout"
+        <!--        <TextView-->
+        <!--            android:id="@+id/notesListFilterTitle"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="12dp"-->
+        <!--            android:text="@string/filter"-->
+        <!--            android:textColor="?colorOnPrimary"-->
+        <!--            android:textSize="16sp"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@id/notesListFilterChipsLayout"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="@id/notesListFilterChipsLayout" />-->
+        <HorizontalScrollView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="12dp"
+            android:layout_marginEnd="12dp"
+            app:layout_constraintBottom_toBottomOf="@id/notesListFilterIcon"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/notesListFilterTitle"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@id/notesListFilterIcon"
+            app:layout_constraintTop_toTopOf="@id/notesListFilterIcon"
+            android:scrollbars="none">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/notesListFilterChipsLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:singleLine="true" />
+
+        </HorizontalScrollView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/notesListRecycler"
@@ -42,7 +61,7 @@
             android:layout_height="0dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/notesListFilterChipsLayout"
+            app:layout_constraintTop_toBottomOf="@id/notesListFilterIcon"
             tools:listitem="@layout/item_note" />
 
         <androidx.appcompat.widget.AppCompatTextView

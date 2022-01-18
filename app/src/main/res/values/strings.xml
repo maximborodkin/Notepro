@@ -82,4 +82,6 @@
     <string name="filter">Filter</string>
     <string name="category">Category</string>
     <string name="edit_note">Edit note</string>
+    <string name="delete_category">Delete category?</string>
+    <string name="delete_category_message">This cannot be undone. Notes with this category will not be deleted</string>
 </resources>

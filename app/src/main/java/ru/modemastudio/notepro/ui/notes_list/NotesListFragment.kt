@@ -139,6 +139,7 @@ class NotesListFragment : Fragment(R.layout.fragment_notes_list) {
                         recyclerAdapter.notifyItemChanged(adapterPosition)
                         dialog.dismiss()
                     }
+                    setOnCancelListener { recyclerAdapter.notifyItemChanged(adapterPosition) }
                     show()
                 }
             },

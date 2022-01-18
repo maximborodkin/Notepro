@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import ru.modemastudio.notepro.R
 import ru.modemastudio.notepro.databinding.FragmentBottomCategoryMenuBinding
 import ru.modemastudio.notepro.model.Category
@@ -20,7 +21,7 @@ class CategoryMenuFragment : BottomSheetDialogFragment() {
 
         binding.categoryMenuEditBtn.setOnClickListener {
             EditTextDialog(
-                context = requireContext(),
+                context = binding.root.context,
                 title = getString(R.string.rename_category),
                 text = category.name,
                 onPositiveButtonClicked = { newName ->
@@ -30,10 +31,18 @@ class CategoryMenuFragment : BottomSheetDialogFragment() {
             )
         }
 
-        binding.categoryMenuDelete.setOnClickListener {
-            onDelete(category)
-            dismiss()
+        val deletionAlertDialog = MaterialAlertDialogBuilder(binding.root.context).also {
+            it.setTitle(R.string.delete_category)
+            it.setMessage(R.string.delete_category_message)
+            it.setNegativeButton(R.string.cancel) { dialog, _ -> dialog.dismiss() }
+            it.setPositiveButton(R.string.ok) { dialog, _ ->
+                onDelete(category)
+                dialog.dismiss()
+                dismiss()
+            }
         }
+
+        binding.categoryMenuDelete.setOnClickListener { deletionAlertDialog.show() }
 
         return binding.root
     }

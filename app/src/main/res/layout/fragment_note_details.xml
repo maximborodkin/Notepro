@@ -13,33 +13,43 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingHorizontal="12dp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/noteDetailsCategoryTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/category"
-            android:textColor="?colorOnPrimary"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@id/noteDetailsCategoryChipsGroup"
+        <ImageView
+            android:id="@+id/noteDetailsCategoryIcon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="@string/category"
+            android:padding="12dp"
+            android:src="@drawable/ic_category"
+            android:visibility="@{viewModel.isEditorVisible ? View.GONE : View.VISIBLE}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/noteDetailsCategoryChipsGroup" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="?colorOnPrimary" />
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/noteDetailsCategoryChipsGroup"
+        <HorizontalScrollView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginEnd="8dp"
+            android:scrollbars="none"
+            android:visibility="@{viewModel.isEditorVisible ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@id/noteDetailsCategoryIcon"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/noteDetailsCategoryTitle"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@id/noteDetailsCategoryIcon"
+            app:layout_constraintTop_toTopOf="@id/noteDetailsCategoryIcon">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/noteDetailsCategoryChipsGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:singleLine="true" />
+        </HorizontalScrollView>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/noteDetailsTextView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginHorizontal="8dp"
             android:isScrollContainer="true"
             android:scrollbarStyle="insideInset"
             android:scrollbars="vertical"
@@ -47,12 +57,13 @@
             app:layout_constraintBottom_toTopOf="@id/noteDetailsEditText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/noteDetailsCategoryChipsGroup" />
+            app:layout_constraintTop_toBottomOf="@id/noteDetailsCategoryIcon" />
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/noteDetailsEditText"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginHorizontal="8dp"
             android:background="@drawable/stroke_box"
             android:gravity="top|start"
             android:padding="6dp"
