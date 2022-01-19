@@ -57,6 +57,8 @@
     <string name="onboarding_second_restore_description">Click the blue trash button to restore a note</string>
 
     <string name="h1">H1</string>
+    <string name="h2">H2</string>
+    <string name="h3">H3</string>
     <string name="bold">Bold</string>
     <string name="italic">Italic</string>
     <string name="onboarding_third_description">Use shortcut buttons on the editor screen. All your work is autosaved</string>

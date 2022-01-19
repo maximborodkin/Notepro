@@ -8,33 +8,51 @@
         android:layout_height="match_parent"
         tools:context=".ui.onboarding.OnboardingFragment">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <com.google.android.material.chip.ChipGroup
             android:id="@+id/onboardingThirdButtonsLayout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:paddingHorizontal="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:singleLine="true">
 
-            <Button
+            <com.google.android.material.chip.Chip
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
                 android:backgroundTint="?colorSurface"
                 android:clickable="false"
                 android:focusable="false"
                 android:text="@string/h1"
                 android:textColor="?colorOnSurface"
-                android:textSize="21sp" />
+                android:textSize="24sp" />
 
-            <Button
+            <com.google.android.material.chip.Chip
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
+                android:backgroundTint="?colorSurface"
+                android:clickable="false"
+                android:focusable="false"
+                android:text="@string/h2"
+                android:textColor="?colorOnSurface"
+                android:textSize="20sp" />
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="?colorSurface"
+                android:clickable="false"
+                android:focusable="false"
+                android:text="@string/h3"
+                android:textColor="?colorOnSurface"
+                android:textSize="16sp" />
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:backgroundTint="?colorSurface"
                 android:clickable="false"
                 android:focusable="false"
@@ -42,17 +60,16 @@
                 android:textColor="?colorOnSurface"
                 android:textStyle="bold" />
 
-            <Button
+            <com.google.android.material.chip.Chip
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
                 android:backgroundTint="?colorSurface"
                 android:clickable="false"
                 android:focusable="false"
                 android:text="@string/italic"
                 android:textColor="?colorOnSurface"
                 android:textStyle="italic" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        </com.google.android.material.chip.ChipGroup>
 
         <TextView
             android:id="@+id/onboardingSecondRestoreDescription"
