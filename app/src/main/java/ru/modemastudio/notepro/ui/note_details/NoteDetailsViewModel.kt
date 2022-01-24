@@ -14,6 +14,7 @@ import ru.modemastudio.notepro.repository.CategoryRepository
 import ru.modemastudio.notepro.repository.FeatureRepository
 import ru.modemastudio.notepro.repository.NoteRepository
 import ru.modemastudio.notepro.ui.common.CategoryActions
+import timber.log.Timber
 import javax.inject.Inject
 
 class NoteDetailsViewModel @Inject constructor(
@@ -50,9 +51,13 @@ class NoteDetailsViewModel @Inject constructor(
 
     override fun createCategory(name: String) {
         viewModelScope.launch {
-            categoryRepository.create(name)?.let { category ->
+            val categoryId = categoryRepository.create(name)
+                Timber.d("categoryId: $categoryId")
+            categoryId?.let { category ->
+                Timber.d("noteCategory: ${_note.value?.category}")
                 if (_note.value?.category == null)
                     _note.value?.category = category
+                Timber.d("noteCategory: ${_note.value?.category}")
             }
         }
     }
@@ -65,6 +70,8 @@ class NoteDetailsViewModel @Inject constructor(
 
     override fun deleteCategory(category: Category) {
         viewModelScope.launch {
+            if (_note.value?.category == category)
+                _note.value?.category = null
             categoryRepository.delete(category)
         }
     }

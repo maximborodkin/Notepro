@@ -7,14 +7,12 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle.State.STARTED
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.FlowPreview
@@ -25,7 +23,6 @@ import ru.modemastudio.notepro.databinding.FragmentNotesListBinding
 import ru.modemastudio.notepro.model.Category
 import ru.modemastudio.notepro.model.Note
 import ru.modemastudio.notepro.ui.common.CategoryChipsFactory
-import ru.modemastudio.notepro.ui.common.CategoryMenuFragment
 import ru.modemastudio.notepro.ui.common.EditTextDialog
 import ru.modemastudio.notepro.util.appComponent
 import ru.modemastudio.notepro.util.autoCleared

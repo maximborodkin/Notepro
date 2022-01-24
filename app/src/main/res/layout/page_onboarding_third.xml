@@ -58,7 +58,7 @@
                 android:focusable="false"
                 android:text="@string/bold"
                 android:textColor="?colorOnSurface"
-                android:textStyle="bold" />
+                android:textAppearance="@style/TextAppearance.Chip.Bold" />
 
             <com.google.android.material.chip.Chip
                 android:layout_width="wrap_content"
@@ -68,7 +68,7 @@
                 android:focusable="false"
                 android:text="@string/italic"
                 android:textColor="?colorOnSurface"
-                android:textStyle="italic" />
+                android:textAppearance="@style/TextAppearance.Chip.Italic" />
         </com.google.android.material.chip.ChipGroup>
 
         <TextView

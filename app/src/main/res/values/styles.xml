@@ -33,4 +33,12 @@
         <item name="android:textColor">?colorControlNormal</item>
     </style>
 
+    <style name="TextAppearance.Chip.Bold" parent="TextAppearance.MaterialComponents.Chip">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.Chip.Italic" parent="TextAppearance.MaterialComponents.Chip">
+        <item name="android:textStyle">italic</item>
+    </style>
+
 </resources>
