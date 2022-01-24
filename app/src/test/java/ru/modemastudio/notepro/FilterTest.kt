@@ -40,27 +40,9 @@ class FilterTest {
                 Note(3, "Note number three", "Enraged and full of anger", Date()),
                 Note(4, "Note number four", "He's half man and half machine", Date()),
                 Note(5, "Note number five", "Rides the Metal Monster", Date()),
-                Note(
-                    6,
-                    "Note with category 1",
-                    "Breathing smoke and fire",
-                    Date(),
-                    category = category1
-                ),
-                Note(
-                    7,
-                    "Note with category 2",
-                    "Closing in with vengeance soaring high",
-                    Date(),
-                    category = category2
-                ),
-                Note(
-                    8,
-                    "Note with category 1",
-                    "He is the Painkiller",
-                    Date(),
-                    category = category1
-                ),
+                Note(6, "Note with category 1", "Breathing smoke and fire", Date(), category = category1),
+                Note(7, "Note with category 2", "Closing in with vengeance soaring high", Date(), category = category2),
+                Note(8, "Note with category 1", "He is the Painkiller", Date(), category = category1),
                 Note(9, "Deleted note", "This is the Painkiller", Date(), isDeleted = true, category = category2),
             )
             return MutableStateFlow(notes)
