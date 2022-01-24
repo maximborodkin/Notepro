@@ -8,6 +8,12 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import android.widget.Toast.LENGTH_SHORT
 import androidx.appcompat.content.res.AppCompatResources
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import ru.modemastudio.notepro.App
 import ru.modemastudio.notepro.di.AppComponent
 import java.text.SimpleDateFormat
@@ -78,3 +84,11 @@ val Context.appComponent: AppComponent
 
 fun String?.like(another: String?): Boolean =
     another?.let { this?.trim()?.contains(it.trim(), true) } == true
+
+fun <T1, T2, R> StateFlow<T1>.combineState(
+    flow2: StateFlow<T2>,
+    scope: CoroutineScope = GlobalScope,
+    sharingStarted: SharingStarted = SharingStarted.Eagerly,
+    transform: (T1, T2) -> R
+): StateFlow<R> = combine(this, flow2) { o1, o2 -> transform.invoke(o1, o2) }
+    .stateIn(scope, sharingStarted, transform.invoke(this.value, flow2.value))
